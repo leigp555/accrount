@@ -1,0 +1,81 @@
+<template>
+  <div class="account-app-wrap">
+    <div class="main">
+      <router-view/>
+    </div>
+    <nav class="account-app-nav">
+      <ol class="nav-list">
+        <li>
+          <router-link to="/detail">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-detail"></use>
+            </svg>
+            <p>明细</p>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/home">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-record"></use>
+            </svg>
+            <p>记账</p>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/statistic">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-statistics"></use>
+            </svg>
+            <p>统计</p>
+          </router-link>
+        </li>
+      </ol>
+    </nav>
+  </div>
+</template>
+
+<script lang="ts" setup>
+
+</script>
+
+<style lang="scss" scoped>
+.account-app-wrap {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  > .main {
+    height: 100%;
+    overflow: auto;
+    border: 1px solid red;
+  }
+
+  > .account-app-nav {
+    position: absolute;
+    border-top: 1px solid rgba(0,0,0,.5);
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 8px 30px;
+    > .nav-list {
+      display: flex;
+      justify-content: space-between;
+      >li{
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        text-align: center;
+      }
+      & .icon {
+        width: 40px;
+        height: 40px;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
+      }
+    }
+  }
+}
+</style>
