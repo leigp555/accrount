@@ -1,26 +1,13 @@
 <template>
-  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-    <el-tab-pane label="User" name="first">User</el-tab-pane>
-    <el-tab-pane label="Config" name="second">Config</el-tab-pane>
-    <el-tab-pane label="Role" name="third">Role</el-tab-pane>
-    <el-tab-pane label="Task" name="fourth">Task</el-tab-pane>
-  </el-tabs>
+  <Tabs v-model:selected="selected">
+    <Tab title="收入">收入</Tab>
+    <Tab title="支出">支出</Tab>
+  </Tabs>
 </template>
+
 <script lang="ts" setup>
-import { ref } from 'vue'
-
-const activeName = ref('first')
-
-const handleClick = (tab: string, event: Event) => {
-  console.log(tab, event)
-}
+import Tab from "./lib/Tab.vue"
+import Tabs from "./lib/Tabs.vue"
+import {ref} from "vue";
+const selected=ref("收入")
 </script>
-<style>
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  background-color: #f4f5f7;
-  color: #6b778c;
-  font-size: 32px;
-  font-weight: 600;
-}
-</style>

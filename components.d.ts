@@ -15,6 +15,8 @@ declare module 'vue' {
     RecordTime: typeof import('./src/components/RecordTime.vue')['default']
     RecordType: typeof import('./src/components/RecordType.vue')['default']
     Statistic: typeof import('./src/components/Statistic.vue')['default']
+    Tab: typeof import('./src/components/lib/Tab.vue')['default']
+    Tabs: typeof import('./src/components/lib/Tabs.vue')['default']
   }
 }
 
