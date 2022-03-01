@@ -2,16 +2,25 @@
 <div class="home-node-wrap">
   <label>
     <span>备注：</span>
-    <input type="text" placeholder="备注一下吧...">
+    <input type="text" placeholder="备注一下吧..." v-model.lazy="node">
   </label>
 </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, ref, watchEffect} from "vue";
+import {useStore} from "vuex";
 
 export default defineComponent({
-  name: "RecordNode"
+  name: "RecordNode",
+  setup(){
+    const store=useStore()
+    const node=ref<string>("")
+    watchEffect(()=>{
+      store.commit("modifyNode",node.value)
+    })
+    return {node}
+  }
 })
 </script>
 

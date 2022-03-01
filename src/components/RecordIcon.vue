@@ -2,7 +2,7 @@
   <div class="icon-wrap">
     <div class="inner">
       <div class="svgList" :class="{expenditureRight:countType==='expenditure'}">
-        <svg class="icon" v-for="(item,index) in incomeList" :key="index">
+        <svg class="icon" v-for="(item,index) in incomeList" :key="index" @click="toggle(item)">
           <use :xlink:href="`#icon-${item}`"></use>
         </svg>
       </div>
@@ -11,7 +11,7 @@
             expenditureLeft:countType==='expenditure',
             expenditure:countType!=='expenditure'
       }">
-        <svg class="icon" v-for="(item,index) in expenditureList" :key="index">
+        <svg class="icon" v-for="(item,index) in expenditureList" :key="index" @click="toggle(item)">
           <use :xlink:href="`#icon-${item}`"></use>
         </svg>
       </div>
@@ -45,7 +45,10 @@ export default defineComponent({
     }
     incomeListContent()
     expenditureListContent()
-    return {incomeList, expenditureList, countType}
+    const toggle=(iconNumber:string)=>{
+      store.commit("modifyIconNumber",iconNumber)
+    }
+    return {incomeList, expenditureList, countType,toggle}
   }
 })
 </script>
