@@ -34,6 +34,7 @@ export default defineComponent({
     })
     const toggle=(title:string)=>{
       selectedTitle.value=title
+      ctx.emit("update:selected",title)
     }
     onMounted(()=>{
       const els=document.getElementById("typeTitles")!.children
