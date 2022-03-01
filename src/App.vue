@@ -48,9 +48,7 @@
   > .main {
     height: 100%;
     overflow: auto;
-    border: 1px solid red;
   }
-
   > .account-app-nav {
     position: absolute;
     border-top: 1px solid rgba(0,0,0,.5);
