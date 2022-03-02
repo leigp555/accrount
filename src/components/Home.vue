@@ -19,16 +19,23 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, onBeforeUnmount} from "vue";
 import RecordType from "./RecordType.vue";
 import RecordIcon from "./RecordIcon.vue";
 import RecordNode from "./RecordNode.vue";
 import RecordTime from "./RecordTime.vue";
 import RecordCalc from "./RecordCalc.vue";
+import {useStore} from "vuex";
 
 export default defineComponent({
   name: "Home",
-  components: {RecordCalc, RecordTime, RecordNode, RecordIcon, RecordType}
+  components: {RecordCalc, RecordTime, RecordNode, RecordIcon, RecordType},
+  setup() {
+    const store = useStore()
+    onBeforeUnmount(() => {
+      store.commit("initial")
+    })
+  }
 })
 </script>
 

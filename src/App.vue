@@ -47,17 +47,18 @@
   left: 0;
   > .main {
     height: 100%;
+    background-color: #202020;
     overflow: auto;
   }
   > .account-app-nav {
     background-color: #ffffff;
-    height: 6em;
     position: absolute;
     border-top: 1px solid rgba(0,0,0,.5);
     bottom: 0;
     left: 0;
     z-index: 10;
     width: 100%;
+    height: 80px;
     padding: 8px 30px;
     > .nav-list {
       display: flex;

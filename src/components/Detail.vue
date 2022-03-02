@@ -8,8 +8,8 @@
     </div>
     <div class="content-wrap">
       <div class="expenditure" :class="{'exOpen':countType==='expenditure','exClose':countType!=='expenditure'}">
-        <div  v-for="(value,key) in sortedExpenditure"
-             :key="key" >
+        <div v-for="(value,key) in sortedExpenditure"  class="list"
+             :key="key">
           <div class="nav">{{ key }}</div>
           <div class="content" v-for="(item,index) in value"
                :key="index">
@@ -30,27 +30,27 @@
       </div>
 
 
-     <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
-       <div v-for="(value,key) in sortedIncomeList"
-            :key="key" >
-         <div class="nav">{{ key }}</div>
-         <div class="content" v-for="(item,index) in value"
-              :key="index">
-           <div class="left">
-             <div class="svgWrap">
-               <svg class="icon" aria-hidden="true">
-                 <use :xlink:href="`#icon-${item.iconNumber}`"></use>
-               </svg>
-             </div>
-             <p>{{ item.node }}</p>
-           </div>
-           <div class="right">
-             <p>￥{{ item.countMoney }}</p>
-             <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
-           </div>
-         </div>
-       </div>
-     </div>
+      <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
+        <div v-for="(value,key) in sortedIncomeList" class="list"
+             :key="key">
+          <div class="nav">{{ key }}</div>
+          <div class="content" v-for="(item,index) in value"
+               :key="index">
+            <div class="left">
+              <div class="svgWrap">
+                <svg class="icon" aria-hidden="true">
+                  <use :xlink:href="`#icon-${item.iconNumber}`"></use>
+                </svg>
+              </div>
+              <p>{{ item.node }}</p>
+            </div>
+            <div class="right">
+              <p>￥{{ item.countMoney }}</p>
+              <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -60,7 +60,7 @@
 import Tab from "./lib/Tab.vue";
 import Tabs from "./lib/Tabs.vue";
 import {useStore} from "vuex";
-import {computed} from "vue";
+import {computed, onBeforeUnmount} from "vue";
 import {stateObj} from "../vueX/vueX";
 import dayjs from "dayjs";
 
@@ -124,29 +124,56 @@ const sortedExpenditure = sortList(expenditureList.value)
 const countType = computed(() => {
   return store.state.countType
 })
+onBeforeUnmount(() => {
+  store.commit("initial")
+})
 </script>
 
 <style lang="scss" scoped>
 .detail-wrap {
+  color: white;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 80px;
+  background-color:#202020;
+  position: relative;
+  >.countType{
+    position: fixed;
+    top: 0;
+    left: 50%;
+    padding-top: 15px;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    width: 100%;
+    background-color:#2a2a2a ;
+  }
   > .content-wrap {
     position: relative;
-    >.expenditure,.income{
+    top: 70px;
+    left: 0;
+    padding-bottom: 80px;
+    >.expenditure{
+      transition: all 250ms;
+    }
+    > .income {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       transition: all 250ms;
     }
-    >.income{
+
+    > .income {
       transform: translateX(50vw);
     }
+
     .content {
       background-color: #202020;
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       .left {
         display: inline-flex;
         align-items: center;
@@ -173,16 +200,20 @@ const countType = computed(() => {
       }
 
     }
-    >.exOpen{
+
+    > .exOpen {
       transform: translateX(0);
     }
-    >.exClose{
+
+    > .exClose {
       transform: translateX(-100vw);
     }
-    >.inOpen{
+
+    > .inOpen {
       transform: translateX(0);
     }
-    >.inClose{
+
+    > .inClose {
       transform: translateX(100vw);
     }
   }
@@ -194,9 +225,6 @@ const countType = computed(() => {
   > .countType {
     background-color: #202020;
   }
-
-  color: white;
-  margin-bottom: 50px;
 
   .nav {
     padding: 10px;
