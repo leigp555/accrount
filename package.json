@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dayjs": "^1.10.8",
     "element-plus": "^2.0.4",
     "sass": "^1.49.9",
     "vue": "^3.2.25",

@@ -2,16 +2,16 @@
   <div class="icon-wrap">
     <div class="inner">
       <div class="svgList" :class="{expenditureRight:countType==='expenditure'}">
-        <svg class="icon" v-for="(item,index) in incomeList" :key="index" @click="toggle(item)">
+        <svg class="icon" v-for="(item,index) in incomeList" :key="index" @click="toggle($event,item)">
           <use :xlink:href="`#icon-${item}`"></use>
         </svg>
       </div>
-      <div class="svgList xxx"
+      <div class="svgList nextList"
            :class="{
             expenditureLeft:countType==='expenditure',
             expenditure:countType!=='expenditure'
       }">
-        <svg class="icon" v-for="(item,index) in expenditureList" :key="index" @click="toggle(item)">
+        <svg class="icon" v-for="(item,index) in expenditureList" :key="index" @click="toggle($event,item)">
           <use :xlink:href="`#icon-${item}`"></use>
         </svg>
       </div>
@@ -20,13 +20,14 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, ref} from "vue";
 import {useStore} from "vuex";
 
 export default defineComponent({
   name: "RecordIcon",
   setup() {
     const store = useStore()
+    const selectedIcon=ref<HTMLDivElement>()
     const countType = computed(() => {
       return store.state.countType
     })
@@ -45,8 +46,11 @@ export default defineComponent({
     }
     incomeListContent()
     expenditureListContent()
-    const toggle=(iconNumber:string)=>{
+    const toggle=(e:Event,iconNumber:string)=>{
       store.commit("modifyIconNumber",iconNumber)
+      if(selectedIcon.value)selectedIcon.value!.classList.remove("selectedIcon")
+      selectedIcon.value =e.currentTarget as HTMLDivElement
+      selectedIcon.value.classList.add("selectedIcon")
     }
     return {incomeList, expenditureList, countType,toggle}
   }
@@ -74,7 +78,9 @@ export default defineComponent({
     left: 0;
 
     > .svgList {
-
+      >.selectedIcon{
+        background-color: green;
+      }
       margin-right: -3vw;
       transition: all 250ms;
       display: inline-block;
@@ -92,7 +98,7 @@ export default defineComponent({
         transform: translateX(100vw);
       }
 
-      &.xxx {
+      &.nextList {
         position: absolute;
         top: 0;
         left: 0;

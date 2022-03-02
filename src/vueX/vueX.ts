@@ -1,14 +1,23 @@
 import {createStore} from 'vuex'
 
+type stateObj = {
+    countType: string,
+    iconNumber: string,
+    node: string,
+    nodeTime: string,
+    countMoney: number
+}
+
 export const store = createStore({
     state: () => {
         return {
-            countType: "income",
-            iconNumber: 0,
+            countType: "expenditure",
+            iconNumber: "",
             node: "",
-            nodeTime: Date,
+            nodeTime: "",
             countMoney: 0,
-            allData:{}
+            allData: {},
+            fetchDate: [],
         }
     },
     mutations: {
@@ -28,19 +37,43 @@ export const store = createStore({
             state.countMoney = payload
         },
         getAll(state) {
-            state.allData= {
+            state.allData = {
                 countType: state.countType,
                 iconNumber: state.iconNumber,
                 node: state.node,
                 nodeTime: state.nodeTime,
                 countMoney: state.countMoney
             }
+        },
+        fetchData(state) {
+            state.fetchDate = JSON.parse(window.localStorage.getItem("save-record")!) || []
+        },
+        initial(state) {
+            state.countType = "expenditure"
+            state.iconNumber = ""
+            state.node = ""
+            state.nodeTime = ""
+            state.countMoney = 0
+            state.fetchDate = []
+            state.allData = {}
         }
     },
-    actions:{
-        getAllDate({commit}){
-            commit("getAll")
+    actions: {
+        getAllDate(ctx) {
+            ctx.commit("getAll")
+        },
+        saveData({commit, state}) {
+            commit("fetchData")
+            // @ts-ignore
+            state.fetchDate.push(state.allData as stateObj)
+            const string = JSON.stringify(state.fetchDate)
+            window.localStorage.setItem("save-record", string)
+        },
+        init({commit}) {
+            commit("initial")
         }
     }
+
+
 })
 

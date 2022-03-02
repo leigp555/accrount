@@ -15,7 +15,7 @@
 
 </template>
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref, watchEffect} from "vue";
+import {computed, defineComponent, onMounted, ref, toRefs, watchEffect} from "vue";
 export default defineComponent({
   props:{
     selected:String

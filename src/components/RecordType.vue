@@ -14,9 +14,10 @@ import {useStore} from "vuex";
 const store = useStore()
 import Tab from "./lib/Tab.vue"
 import Tabs from "./lib/Tabs.vue"
-import {ref, watchEffect} from "vue";
+import {computed, ref, watchEffect} from "vue";
 
-const selected = ref("支出")
+const selected=ref("支出")
+
 watchEffect(() => {
   if (selected.value === "收入") {
     store.commit("modifyCountType", "income")

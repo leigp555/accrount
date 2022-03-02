@@ -8,14 +8,17 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watchEffect} from "vue";
+import {computed, defineComponent, ref, watchEffect} from "vue";
 import {useStore} from "vuex";
-
+import dayjs from "dayjs";
 export default defineComponent({
   name: "RecordNode",
   setup(){
     const store=useStore()
-    const time=ref<Date>("2022-03-26T11:25")
+    const currentTime=computed(()=>{
+     return dayjs().format('YYYY-MM-DDTHH:mm:ss')
+    })
+    const time=ref<string>(currentTime.value)
     watchEffect(()=>{
       store.commit("modifyNodeTime",time)
     })

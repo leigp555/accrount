@@ -35,17 +35,20 @@ export default defineComponent({
   setup() {
     const store=useStore()
     const result=ref<string>("")
-    const onClick=(e)=>{
-      const text=e.target.innerText
+    const onClick=(e:Event)=>{
+      //@ts-ignore
+      const text=e.target!.innerText as string
       try {
         calc(result,text)
       }catch (error){
         alert("error")
       }
      if(text==="完成"){
-       store.commit("modifyCountMoney",result.value-0)
+       const resultNumber=parseInt(result.value)
+       store.commit("modifyCountMoney",resultNumber)
        store.dispatch("getAllDate")
-       console.log(store.state.allData)
+       store.dispatch("saveData")
+       store.dispatch("init")
      }
     }
     return {onClick,result}
