@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref} from "vue";
+import {computed, defineComponent, ref, watchEffect} from "vue";
 import {useStore} from "vuex";
 
 export default defineComponent({
@@ -46,6 +46,9 @@ export default defineComponent({
     }
     incomeListContent()
     expenditureListContent()
+    watchEffect(()=>{
+      if(!store.state.iconNumber&&selectedIcon.value)selectedIcon.value!.classList.remove("selectedIcon")
+    })
     const toggle=(e:Event,iconNumber:string)=>{
       store.commit("modifyIconNumber",iconNumber)
       if(selectedIcon.value)selectedIcon.value!.classList.remove("selectedIcon")
