@@ -51,6 +51,7 @@ export default defineComponent({
          store.dispatch("saveData")
          store.commit("initial")
          result.value=""
+         window.alert("记录成功")
        }else {
          window.alert("请选择一个图标")
        }

@@ -1,7 +1,7 @@
 import {createStore} from 'vuex'
 import dayjs from "dayjs";
 
-type stateObj = {
+export type stateObj = {
     countType: string,
     iconNumber: string,
     node: string,
