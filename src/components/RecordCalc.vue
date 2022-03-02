@@ -47,8 +47,14 @@ export default defineComponent({
        const resultNumber=parseInt(result.value)
        store.commit("modifyCountMoney",resultNumber)
        store.dispatch("getAllDate")
-       store.dispatch("saveData")
-       store.dispatch("init")
+       if(store.state.allData.iconNumber){
+         store.dispatch("saveData")
+         store.commit("initial")
+         result.value=""
+       }else {
+         window.alert("请选择一个图标")
+       }
+
      }
     }
     return {onClick,result}
