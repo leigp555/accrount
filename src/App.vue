@@ -51,7 +51,8 @@
     overflow: auto;
   }
   > .account-app-nav {
-    background-color: #ffffff;
+    background-color: rgba(61, 60, 60, 1);
+    color: white;
     position: absolute;
     border-top: 1px solid rgba(0,0,0,.5);
     bottom: 0;

@@ -1,4 +1,5 @@
 <template>
+
   <div class="detail-wrap">
     <div class="countType">
       <Tabs>
@@ -8,10 +9,10 @@
     </div>
     <div class="content-wrap">
       <div class="expenditure" :class="{'exOpen':countType==='expenditure','exClose':countType!=='expenditure'}">
-        <div v-for="(value,key) in sortedExpenditure"  class="list"
+        <div v-for="(value,key) in sortedExpenditure" class="list"
              :key="key">
-          <div class="nav">{{ key }}</div>
-          <div class="content" v-for="(item,index) in value"
+          <div class="nav">{{ key }}<span>支出￥{{value[value.length-1]}}</span></div>
+          <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
                :key="index">
             <div class="left">
               <div class="svgWrap">
@@ -29,11 +30,10 @@
         </div>
       </div>
 
-
       <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
         <div v-for="(value,key) in sortedIncomeList" class="list"
              :key="key">
-          <div class="nav">{{ key }}</div>
+          <div class="nav">{{ key }} <span>收入￥{{value[value.length-1]}}</span></div>
           <div class="content" v-for="(item,index) in value"
                :key="index">
             <div class="left">
@@ -101,7 +101,10 @@ const expenditureList = computed(() => {
   return quickSoft(arr)
 })
 
-type hashType = { [key: string]: stateObj[] }
+interface hashType {
+  [key: string]: stateObj[],
+}
+
 const ymd = (date: string) => {
   return dayjs(date).format("YYYY-MM-DD")
 }
@@ -118,8 +121,33 @@ const sortList = (arr: stateObj[]) => {
   })
   return hash
 }
-const sortedIncomeList = sortList(incomeList.value)
-const sortedExpenditure = sortList(expenditureList.value)
+let sortedIncomeList = sortList(incomeList.value)
+let sortedExpenditure = sortList(expenditureList.value)
+
+const total=(obj:hashType)=>{
+  const newObj=Object.assign(obj)
+  for (let key in newObj){
+    const arr=newObj[key] as stateObj[]
+    if(arr.length===1){
+      //@ts-ignore
+      arr.push(arr[0].countMoney)
+    }else {
+      let number=0
+      arr.forEach((item)=>{
+        number+=item.countMoney
+      })
+      //@ts-ignore
+      arr.push(number)
+    }
+  }
+  return newObj
+}
+
+sortedExpenditure=total(sortedExpenditure)
+sortedIncomeList=total(sortedIncomeList)
+console.log(sortedIncomeList)
+console.log(sortedExpenditure)
+
 //是否展示
 const countType = computed(() => {
   return store.state.countType
@@ -135,9 +163,10 @@ onBeforeUnmount(() => {
   height: 100%;
   width: 100%;
   padding-bottom: 80px;
-  background-color:#202020;
+  background-color: #202020;
   position: relative;
-  >.countType{
+
+  > .countType {
     position: fixed;
     top: 0;
     left: 50%;
@@ -146,16 +175,19 @@ onBeforeUnmount(() => {
     z-index: 10;
 
     width: 100%;
-    background-color:#2a2a2a ;
+    background-color: #2a2a2a;
   }
+
   > .content-wrap {
     position: relative;
     top: 70px;
     left: 0;
     padding-bottom: 80px;
-    >.expenditure{
+
+    > .expenditure {
       transition: all 250ms;
     }
+
     > .income {
       position: absolute;
       top: 0;
@@ -163,17 +195,13 @@ onBeforeUnmount(() => {
       width: 100%;
       transition: all 250ms;
     }
-
-    > .income {
-      transform: translateX(50vw);
-    }
-
     .content {
       background-color: #202020;
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .left {
         display: inline-flex;
         align-items: center;
@@ -219,7 +247,6 @@ onBeforeUnmount(() => {
   }
 
   > .exOpen {
-    border: 1px solid red;
   }
 
   > .countType {
@@ -227,8 +254,12 @@ onBeforeUnmount(() => {
   }
 
   .nav {
-    padding: 10px;
+    font-size: 10px;
+    padding: 15px 20px;
     background-color: #2a2a2a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 

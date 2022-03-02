@@ -40,5 +40,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
+.home-wrap{
+  background-color:white;
+}
 </style>
