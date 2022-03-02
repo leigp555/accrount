@@ -1,4 +1,5 @@
 import {createStore} from 'vuex'
+import dayjs from "dayjs";
 
 type stateObj = {
     countType: string,
@@ -52,7 +53,7 @@ export const store = createStore({
             state.countType = "expenditure"
             state.iconNumber = ""
             state.node = ""
-            state.nodeTime = ""
+            state.nodeTime = dayjs().format('YYYY-MM-DDTHH:mm:ss')
             state.countMoney = 0
             state.fetchDate = []
             state.allData = {}
@@ -69,9 +70,6 @@ export const store = createStore({
             const string = JSON.stringify(state.fetchDate)
             window.localStorage.setItem("save-record", string)
         },
-        init({commit}) {
-            commit("initial")
-        }
     }
 
 
