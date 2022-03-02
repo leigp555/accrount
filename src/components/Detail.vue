@@ -1,51 +1,57 @@
 <template>
   <div class="detail-wrap">
     <div class="countType">
-      <Tabs >
+      <Tabs>
         <Tab title="支出"></Tab>
         <Tab title="收入"></Tab>
       </Tabs>
     </div>
-    <div class="expenditure" v-for="(value,key,index) in sortedExpenditure"
-         :key="index">
-      <div class="nav">{{ key }}</div>
-      <div class="content" v-for="(item,index) in quickSoft(value)"
-           :key="index">
-        <div class="left">
-          <div class="svgWrap">
-            <svg class="icon" aria-hidden="true">
-              <use :xlink:href="`#icon-${item.iconNumber}`"></use>
-            </svg>
+    <div class="content-wrap">
+      <div class="expenditure" :class="{'exOpen':countType==='expenditure','exClose':countType!=='expenditure'}">
+        <div  v-for="(value,key) in sortedExpenditure"
+             :key="key" >
+          <div class="nav">{{ key }}</div>
+          <div class="content" v-for="(item,index) in value"
+               :key="index">
+            <div class="left">
+              <div class="svgWrap">
+                <svg class="icon" aria-hidden="true">
+                  <use :xlink:href="`#icon-${item.iconNumber}`"></use>
+                </svg>
+              </div>
+              <p>{{ item.node }}</p>
+            </div>
+            <div class="right">
+              <p>￥{{ item.countMoney }}</p>
+              <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
+            </div>
           </div>
-          <p>{{ item.node }}</p>
-        </div>
-        <div class="right">
-          <p>{{ item.countMoney }}</p>
-          <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
         </div>
       </div>
-    </div>
 
 
-    <hr>
-    <div class="income" v-for="(value,key,index) in sortedIncomeList"
-         :key="index">
-      <div class="nav">{{ key }}</div>
-      <div class="content" v-for="(item,index) in quickSoft(value)"
-           :key="index">
-        <div class="left">
-          <div class="svgWrap">
-            <svg class="icon" aria-hidden="true">
-              <use :xlink:href="`#icon-${item.iconNumber}`"></use>
-            </svg>
-          </div>
-          <p>{{ item.node }}</p>
-        </div>
-        <div class="right">
-          <p>{{ item.countMoney }}</p>
-          <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
-        </div>
-      </div>
+     <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
+       <div v-for="(value,key) in sortedIncomeList"
+            :key="key" >
+         <div class="nav">{{ key }}</div>
+         <div class="content" v-for="(item,index) in value"
+              :key="index">
+           <div class="left">
+             <div class="svgWrap">
+               <svg class="icon" aria-hidden="true">
+                 <use :xlink:href="`#icon-${item.iconNumber}`"></use>
+               </svg>
+             </div>
+             <p>{{ item.node }}</p>
+           </div>
+           <div class="right">
+             <p>￥{{ item.countMoney }}</p>
+             <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
+           </div>
+         </div>
+       </div>
+     </div>
+
     </div>
   </div>
 </template>
@@ -115,44 +121,86 @@ const sortList = (arr: stateObj[]) => {
 const sortedIncomeList = sortList(incomeList.value)
 const sortedExpenditure = sortList(expenditureList.value)
 //是否展示
+const countType = computed(() => {
+  return store.state.countType
+})
 </script>
 
 <style lang="scss" scoped>
 .detail-wrap {
-  >.countType{
+  > .content-wrap {
+    position: relative;
+    >.expenditure,.income{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: all 250ms;
+    }
+    >.income{
+      transform: translateX(50vw);
+    }
+    .content {
+      background-color: #202020;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .left {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+
+        > .svgWrap {
+          display: inline-block;
+          padding: 10px;
+          background-color: #342f2c;
+          border-radius: 35%;
+        }
+      }
+
+      .right {
+        display: inline-flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: right;
+        gap: 8px;
+
+        p {
+          font-size: 20px;
+        }
+      }
+
+    }
+    >.exOpen{
+      transform: translateX(0);
+    }
+    >.exClose{
+      transform: translateX(-100vw);
+    }
+    >.inOpen{
+      transform: translateX(0);
+    }
+    >.inClose{
+      transform: translateX(100vw);
+    }
+  }
+
+  > .exOpen {
+    border: 1px solid red;
+  }
+
+  > .countType {
     background-color: #202020;
   }
+
   color: white;
   margin-bottom: 50px;
+
   .nav {
     padding: 10px;
     background-color: #2a2a2a;
-  }
-
-  .content {
-    background-color: #202020;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .left {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      > .svgWrap {
-        display: inline-block;
-        padding: 10px;
-        background-color: #342f2c;
-        border-radius: 35%;
-      }
-    }
-    .right{
-      display: inline-flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      gap: 10px;
-    }
-
   }
 }
 
