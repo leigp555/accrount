@@ -18,27 +18,9 @@
         </div>
       </div>
     </div>
-    <div class="content-wrap">
-      <div v-for="(item,key) in weekExpenditureData" class="list" :key="key">
-        <div class="content">
-          <div class="left">
-            <div class="svgWrap">
-              <svg class="icon" aria-hidden="true">
-                <use :xlink:href="`#icon-${item.iconNumber}`"></use>
-              </svg>
-            </div>
-            <p>{{ item.node }}</p>
-          </div>
-          <div class="right">
-            <p>￥{{ item.countMoney }}</p>
-            <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
+    <MoneyRanking :data="weekExpenditureData"/>
   </div>
+
 </template>
 
 <script lang="ts" setup>
@@ -51,6 +33,7 @@ import {hashType} from "./lib/type";
 import {computed, watchEffect} from "vue";
 import {useStore} from "vuex";
 import {stateObj} from "../vueX/vueX";
+import MoneyRanking from "./lib/MoneyRanking.vue";
 
 type weekInformation = {
   zhDay: string,
@@ -131,9 +114,6 @@ const incomeList = list(incomeWeek)
 
 const weekExpenditureData:stateObj[] = handleData(sortedExpenditure)[1].sort((a,b)=>b.countMoney-a.countMoney)
 const weekIncomeData:stateObj[] = handleData(sortedIncomeList)[1].sort((a,b)=>b.countMoney-a.countMoney)
-console.log(weekIncomeData)
-console.log(weekExpenditureData);
-
 
 //echart选项
 const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
@@ -245,42 +225,7 @@ const optionExpenditure = createOption(expenditureList)
       z-index: 10;
     }
   }
-  >.content-wrap {
-    >.list{
-      >.content {
-        background-color: #202020;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
 
-        .left {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-
-          > .svgWrap {
-            display: inline-block;
-            padding: 10px;
-            background-color: #342f2c;
-            border-radius: 35%;
-          }
-        }
-        .right {
-          display: inline-flex;
-          flex-wrap: wrap;
-          flex-direction: column;
-          text-align: right;
-          gap: 8px;
-
-          p {
-            font-size: 20px;
-          }
-        }
-      }
-    }
-
-  }
 }
 
 #incomeChart, #expenditureChart {
@@ -294,22 +239,4 @@ const optionExpenditure = createOption(expenditureList)
 .expenditureClose{
   transform: translateX(-100vw);
 }
-
-
-
-
-
-
-.icon {
-  width: 40px;
-  height: 40px;
-  background-color: white;
-  clip-path: circle(50%);
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-}
-
-
-
 </style>

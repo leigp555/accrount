@@ -10,6 +10,7 @@ declare module 'vue' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     Home: typeof import('./src/components/Home.vue')['default']
+    MoneyRanking: typeof import('./src/components/lib/MoneyRanking.vue')['default']
     NotFound: typeof import('./src/components/NotFound.vue')['default']
     RecordCalc: typeof import('./src/components/RecordCalc.vue')['default']
     RecordIcon: typeof import('./src/components/RecordIcon.vue')['default']
