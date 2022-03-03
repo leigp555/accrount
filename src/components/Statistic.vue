@@ -18,7 +18,47 @@
 import Tabs from "./lib/Tabs.vue";
 import Tab from "./lib/Tab.vue";
 import EChart from "./lib/EChart.vue";
+import {result} from "./lib/fetchData";
+import dayjs from "dayjs";
 
+type weekInformation = {
+  zhDay: string,
+  orderIndex: string,
+  resetWeekDay:number
+}
+const {sortedExpenditure, sortedIncomeList} = result()
+console.log(sortedExpenditure)
+console.log(sortedIncomeList);
+
+const currentTime=Date()
+const currentDay = dayjs(currentTime).day()
+const getWeek=()=>{
+  const weekHash = {
+    1: "周一",
+    2: "周二",
+    3: "周三",
+    4: "周四",
+    5: "周五",
+    6: "周六",
+    7: "周日",
+  }
+  let weekInfo:weekInformation = {}
+  for (let key in weekHash) {
+    if (key === currentDay.toString()) {
+      weekInfo.zhDay = weekHash[key]
+      weekInfo.orderIndex = key-0
+    }
+     weekInfo.resetWeekDay = 7 - (weekInfo.orderIndex - 0)
+  }
+  return weekInfo
+}
+const {zhDay,orderIndex,resetWeekDay}=getWeek()
+console.log(zhDay, orderIndex, resetWeekDay);
+const x=dayjs(currentTime).subtract(orderIndex-1, 'day')
+const y=dayjs(currentTime).add(resetWeekDay, 'day')
+console.log(x.format("YYYY-MM-DD"))
+console.log(y.format("YYYY-MM-DD"));
+console.log(dayjs(currentTime).format("YYYY-MM-DD"));
 
 // const option: ECOption = {
 //   toolbox: {
@@ -79,13 +119,13 @@ const option = {
         alignWithLabel: true
       },
       // prettier-ignore
-      data: ['周一','周二','周三','周四','周五','周六','周日',]
+      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日',]
     }
   ],
   yAxis: [
     {
       type: 'value',
-      width:'100%' ,
+      width: '100%',
       name: '温度',
       position: 'center',
       alignTicks: true,
