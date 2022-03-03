@@ -33,8 +33,8 @@
       <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
         <div v-for="(value,key) in sortedIncomeList" class="list"
              :key="key">
-          <div class="nav">{{ key }} <span>收入￥{{value[value.length-1]}}</span></div>
-          <div class="content" v-for="(item,index) in value"
+          <div class="nav">{{ key }}<span>支出￥{{value[value.length-1]}}</span></div>
+          <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
                :key="index">
             <div class="left">
               <div class="svgWrap">
@@ -67,7 +67,7 @@ import {result} from "./lib/fetchData";
 const store=useStore()
 //获取分组切排好序的所有初次加载时的数据
 const {sortedIncomeList,sortedExpenditure}=result()
-
+console.log(sortedIncomeList)
 //是否展示
 const countType = computed(() => {
   return store.state.countType
