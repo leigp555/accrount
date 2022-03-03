@@ -15,9 +15,9 @@ const quickSoft: (number: stateObj[]) => stateObj[] = (number: stateObj[]) => {
     let right = []
     for (let i = 0; i < number.length; i++) {
         if (dayjs(number[i].nodeTime).isBefore(pivot.nodeTime)) {
-            left.push(number[i])
-        } else {
             right.push(number[i])
+        } else {
+            left.push(number[i])
         }
     }
     return quickSoft(left).concat([pivot], quickSoft(right))
