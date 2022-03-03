@@ -4,6 +4,8 @@
 <script lang="ts">
 import * as echarts from 'echarts/core';
 import {BarChart} from 'echarts/charts';
+import { LineChart } from 'echarts/charts';
+import { ToolboxComponent } from 'echarts/components';
 import {
   TitleComponent,
   TooltipComponent,
@@ -13,19 +15,21 @@ import {
 } from 'echarts/components';
 import {LabelLayout, UniversalTransition} from 'echarts/features';
 import {CanvasRenderer} from 'echarts/renderers';
-import {defineComponent, onMounted, toRefs} from "vue";
-
-
+import {defineComponent,onMounted, toRefs} from "vue";
 export default defineComponent({
   props:{
-    option:Object
+    option:Object,
   },
   setup(props) {
     const {option}=toRefs(props)
-    echarts.use([TitleComponent, TooltipComponent, GridComponent, DatasetComponent, TransformComponent, BarChart, LabelLayout, UniversalTransition, CanvasRenderer]);
+    echarts.use([TitleComponent,TooltipComponent,
+      GridComponent, DatasetComponent, TransformComponent,
+      BarChart, LineChart, LabelLayout, UniversalTransition,
+      CanvasRenderer,ToolboxComponent
+    ]);
     onMounted(() => {
       const myChart = echarts.init(document.getElementById("ecRoot")!);
-      myChart.setOption(option.value)
+      option.value&&myChart.setOption(option.value)
     })
   }
 })
