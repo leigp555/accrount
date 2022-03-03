@@ -18,6 +18,26 @@
         </div>
       </div>
     </div>
+    <div class="content-wrap">
+      <div v-for="(item,key) in weekExpenditureData" class="list" :key="key">
+        <div class="content">
+          <div class="left">
+            <div class="svgWrap">
+              <svg class="icon" aria-hidden="true">
+                <use :xlink:href="`#icon-${item.iconNumber}`"></use>
+              </svg>
+            </div>
+            <p>{{ item.node }}</p>
+          </div>
+          <div class="right">
+            <p>￥{{ item.countMoney }}</p>
+            <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
@@ -30,6 +50,7 @@ import dayjs from "dayjs";
 import {hashType} from "./lib/type";
 import {computed, watchEffect} from "vue";
 import {useStore} from "vuex";
+import {stateObj} from "../vueX/vueX";
 
 type weekInformation = {
   zhDay: string,
@@ -40,7 +61,9 @@ const store = useStore()
 const {sortedExpenditure, sortedIncomeList} = result()
 
 const currentTime = Date()
+//获取当前时间为一周当中的周几
 const currentDay = dayjs(currentTime).day()
+//getWeek函数返回距离当前时间的周一和周日的天数
 const getWeek = () => {
   const weekHash = {
     1: "周一",
@@ -61,10 +84,11 @@ const getWeek = () => {
   }
   return weekInfo
 }
+//获取周一和周日的具体时间
 const {zhDay, orderIndex, resetWeekDay} = getWeek()
 const weekStart = dayjs(currentTime).subtract(orderIndex - 1, 'day')
 const weekEnd = dayjs(currentTime).add(resetWeekDay, 'day')
-
+//创建一个key为一周时间的hash对象
 const createWeekDayHash = () => {
   const obj = {}
   for (let i = 0; i < 7; i++) {
@@ -72,16 +96,28 @@ const createWeekDayHash = () => {
   }
   return obj
 }
-
+//返回符合一周时间内所有记录的具体一天的金额总和以及所有的记录
 const handleData = (obj: hashType) => {
   const weekDayHash = createWeekDayHash()
+  let xxx= []
   for (let key in weekDayHash) {
     weekDayHash[key] = obj[key] || [0]
   }
-  return weekDayHash
+  for(let key in weekDayHash){
+     if(obj[key]&&obj[key].length===2){
+       xxx.push(obj[key][0])
+     }else if(obj[key]&&obj[key].length>2){
+       const yyy=[...obj[key]]
+       yyy.pop()
+       xxx=xxx.concat(yyy)
+     }
+  }
+  return [weekDayHash,xxx]
 }
-const expenditureWeek = handleData(sortedExpenditure)
-const incomeWeek = handleData(sortedIncomeList)
+//获取当天所有数据
+const expenditureWeek = handleData(sortedExpenditure)[0]
+const incomeWeek = handleData(sortedIncomeList)[0]
+//获取当天的金额总和合成一个数组
 const list = (obj) => {
   const array = []
   for (let key in obj) {
@@ -89,11 +125,17 @@ const list = (obj) => {
   }
   return array
 }
+
 const expenditureList = list(expenditureWeek)
 const incomeList = list(incomeWeek)
-console.log(expenditureWeek);
+
+const weekExpenditureData:stateObj[] = handleData(sortedExpenditure)[1].sort((a,b)=>b.countMoney-a.countMoney)
+const weekIncomeData:stateObj[] = handleData(sortedIncomeList)[1].sort((a,b)=>b.countMoney-a.countMoney)
+console.log(weekIncomeData)
+console.log(weekExpenditureData);
 
 
+//echart选项
 const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
 const createOption = (list) => {
   return {
@@ -203,6 +245,42 @@ const optionExpenditure = createOption(expenditureList)
       z-index: 10;
     }
   }
+  >.content-wrap {
+    >.list{
+      >.content {
+        background-color: #202020;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .left {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+
+          > .svgWrap {
+            display: inline-block;
+            padding: 10px;
+            background-color: #342f2c;
+            border-radius: 35%;
+          }
+        }
+        .right {
+          display: inline-flex;
+          flex-wrap: wrap;
+          flex-direction: column;
+          text-align: right;
+          gap: 8px;
+
+          p {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+
+  }
 }
 
 #incomeChart, #expenditureChart {
@@ -216,4 +294,22 @@ const optionExpenditure = createOption(expenditureList)
 .expenditureClose{
   transform: translateX(-100vw);
 }
+
+
+
+
+
+
+.icon {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  clip-path: circle(50%);
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+
+
 </style>
