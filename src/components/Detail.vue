@@ -145,8 +145,7 @@ const total=(obj:hashType)=>{
 
 sortedExpenditure=total(sortedExpenditure)
 sortedIncomeList=total(sortedIncomeList)
-console.log(sortedIncomeList)
-console.log(sortedExpenditure)
+
 
 //是否展示
 const countType = computed(() => {
