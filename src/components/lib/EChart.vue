@@ -19,16 +19,17 @@ import {defineComponent,onMounted, toRefs} from "vue";
 export default defineComponent({
   props:{
     option:Object,
+    root:String
   },
   setup(props) {
-    const {option}=toRefs(props)
+    const {option,root}=toRefs(props)
     echarts.use([TitleComponent,TooltipComponent,
       GridComponent, DatasetComponent, TransformComponent,
       BarChart, LineChart, LabelLayout, UniversalTransition,
       CanvasRenderer,ToolboxComponent
     ]);
     onMounted(() => {
-      const myChart = echarts.init(document.getElementById("ecRoot")!);
+      const myChart = echarts.init(document.getElementById(root.value)!);
       option.value&&myChart.setOption(option.value)
     })
   }

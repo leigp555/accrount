@@ -2,6 +2,7 @@ import {useStore} from "vuex";
 import {computed} from "vue";
 import {stateObj} from "../../vueX/vueX";
 import dayjs from "dayjs";
+import {hashType} from "./type";
 
 
 //排序
@@ -22,9 +23,7 @@ const quickSoft: (number: stateObj[]) => stateObj[] = (number: stateObj[]) => {
     }
     return quickSoft(left).concat([pivot], quickSoft(right))
 }
-interface hashType {
-    [key: string]: stateObj[],
-}
+
 const ymd = (date: string) => {
     return dayjs(date).format("YYYY-MM-DD")
 }
