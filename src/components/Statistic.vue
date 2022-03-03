@@ -18,7 +18,12 @@
         </div>
       </div>
     </div>
-    <MoneyRanking :data="weekExpenditureData"/>
+    <div class="rank" v-if="countType==='expenditure'">
+      <MoneyRanking :data="weekExpenditureData"/>
+    </div>
+    <div class="rank">
+      <MoneyRanking :data="weekIncomeData" v-if="countType==='income'"/>
+    </div>
   </div>
 
 </template>
@@ -30,7 +35,7 @@ import EChart from "./lib/EChart.vue";
 import {result} from "./lib/fetchData";
 import dayjs from "dayjs";
 import {hashType} from "./lib/type";
-import {computed, watchEffect} from "vue";
+import {computed} from "vue";
 import {useStore} from "vuex";
 import {stateObj} from "../vueX/vueX";
 import MoneyRanking from "./lib/MoneyRanking.vue";
@@ -108,10 +113,9 @@ const list = (obj) => {
   }
   return array
 }
-
 const expenditureList = list(expenditureWeek)
 const incomeList = list(incomeWeek)
-
+//获取金额排行的数据
 const weekExpenditureData:stateObj[] = handleData(sortedExpenditure)[1].sort((a,b)=>b.countMoney-a.countMoney)
 const weekIncomeData:stateObj[] = handleData(sortedIncomeList)[1].sort((a,b)=>b.countMoney-a.countMoney)
 
@@ -201,7 +205,7 @@ const optionExpenditure = createOption(expenditureList)
 .statistic-wrap {
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: inherit;
   color: white;
 
   > .countType {
@@ -210,6 +214,7 @@ const optionExpenditure = createOption(expenditureList)
   >.inner{
     width: 100%;
     padding: 10px;
+    background-color: #2a2a2a;
     >.transWrap{
       transition: all 250ms;
       display: block;
@@ -231,7 +236,7 @@ const optionExpenditure = createOption(expenditureList)
 #incomeChart, #expenditureChart {
   display: block;
   width: 100%;
-  height: 400px;
+  height: 300px;
 }
 .incomeOpen{
   transform: translateX(-100vw);

@@ -42,6 +42,7 @@ export default defineComponent({
 .rank-wrap{
   >.content-wrap {
     >.list{
+      border-bottom: 1px solid white;
       >.content {
         background-color: #202020;
         padding: 10px 20px;

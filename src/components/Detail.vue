@@ -67,7 +67,6 @@ import {result} from "./lib/fetchData";
 const store=useStore()
 //获取分组切排好序的所有初次加载时的数据
 const {sortedIncomeList,sortedExpenditure}=result()
-console.log(sortedIncomeList)
 //是否展示
 const countType = computed(() => {
   return store.state.countType
