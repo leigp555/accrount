@@ -8,7 +8,7 @@
     </div>
     <div class="inner">
       <div class="transWrap" :class="{incomeOpen:countType==='income',incomeClose:countType==='expenditure'}">
-        <div id="incomeChart" >
+        <div id="incomeChart">
           <EChart :option="optionIncome" root="incomeChart"></EChart>
         </div>
       </div>
@@ -19,10 +19,10 @@
       </div>
     </div>
     <div class="rank" v-if="countType==='expenditure'">
-      <MoneyRanking :data="weekExpenditureData"/>
+      <MoneyRanking :data="expenditureShowData"/>
     </div>
     <div class="rank">
-      <MoneyRanking :data="weekIncomeData" v-if="countType==='income'"/>
+      <MoneyRanking :data="incomeShowData" v-if="countType==='income'"/>
     </div>
   </div>
 
@@ -33,95 +33,38 @@ import Tabs from "./lib/Tabs.vue";
 import Tab from "./lib/Tab.vue";
 import EChart from "./lib/EChart.vue";
 import {result} from "./lib/fetchData";
-import dayjs from "dayjs";
-import {hashType} from "./lib/type";
-import {computed} from "vue";
-import {useStore} from "vuex";
-import {stateObj} from "../vueX/vueX";
+import {computed, ref} from "vue";
+
 import MoneyRanking from "./lib/MoneyRanking.vue";
+import {useStore} from "vuex";
+import dayjs from "dayjs";
+import {handleDataX} from "./lib/statistic";
+const store=useStore()
+const {sortedIncomeList, sortedExpenditure} = result()
+const currentTime=dayjs()
+const type=ref<"year"|"month"|"week">("week")
+const countType = computed(() => {
+  return store.state.countType
+})
+type.value="month"
+const {expenditureShowData, incomeShowData, expenditureList, incomeList} =handleDataX("year",sortedIncomeList, sortedExpenditure,currentTime)!
 
-type weekInformation = {
-  zhDay: string,
-  orderIndex: string,
-  resetWeekDay: number
+const year=(count:number)=>{
+  return dayjs().subtract(count, 'year').format("YYYY")
 }
-const store = useStore()
-const {sortedExpenditure, sortedIncomeList} = result()
 
-const currentTime = Date()
-//获取当前时间为一周当中的周几
-const currentDay = dayjs(currentTime).day()
-//getWeek函数返回距离当前时间的周一和周日的天数
-const getWeek = () => {
-  const weekHash = {
-    1: "周一",
-    2: "周二",
-    3: "周三",
-    4: "周四",
-    5: "周五",
-    6: "周六",
-    7: "周日",
+const createDateX=(type:string)=>{
+  if(type==="week"){
+    return  ['周一', '周二', '周三', '周四', '周五', '周六', '周日',]
+  }else if(type==="month"){
+    return  ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
+  }else if(type==="year"){
+    return [year(2),year(1),year(0)]
   }
-  let weekInfo: weekInformation = {}
-  for (let key in weekHash) {
-    if (key === currentDay.toString()) {
-      weekInfo.zhDay = weekHash[key]
-      weekInfo.orderIndex = key - 0
-    }
-    weekInfo.resetWeekDay = 7 - (weekInfo.orderIndex - 0)
-  }
-  return weekInfo
 }
-//获取周一和周日的具体时间
-const {zhDay, orderIndex, resetWeekDay} = getWeek()
-const weekStart = dayjs(currentTime).subtract(orderIndex - 1, 'day')
-const weekEnd = dayjs(currentTime).add(resetWeekDay, 'day')
-//创建一个key为一周时间的hash对象
-const createWeekDayHash = () => {
-  const obj = {}
-  for (let i = 0; i < 7; i++) {
-    obj[dayjs(weekStart).add(i, 'day').format("YYYY-MM-DD")] = []
-  }
-  return obj
-}
-//返回符合一周时间内所有记录的具体一天的金额总和以及所有的记录
-const handleData = (obj: hashType) => {
-  const weekDayHash = createWeekDayHash()
-  let xxx= []
-  for (let key in weekDayHash) {
-    weekDayHash[key] = obj[key] || [0]
-  }
-  for(let key in weekDayHash){
-     if(obj[key]&&obj[key].length===2){
-       xxx.push(obj[key][0])
-     }else if(obj[key]&&obj[key].length>2){
-       const yyy=[...obj[key]]
-       yyy.pop()
-       xxx=xxx.concat(yyy)
-     }
-  }
-  return [weekDayHash,xxx]
-}
-//获取当天所有数据
-const expenditureWeek = handleData(sortedExpenditure)[0]
-const incomeWeek = handleData(sortedIncomeList)[0]
-//获取当天的金额总和合成一个数组
-const list = (obj) => {
-  const array = []
-  for (let key in obj) {
-    array.push(obj[key][obj[key].length - 1])
-  }
-  return array
-}
-const expenditureList = list(expenditureWeek)
-const incomeList = list(incomeWeek)
-//获取金额排行的数据
-const weekExpenditureData:stateObj[] = handleData(sortedExpenditure)[1].sort((a,b)=>b.countMoney-a.countMoney)
-const weekIncomeData:stateObj[] = handleData(sortedIncomeList)[1].sort((a,b)=>b.countMoney-a.countMoney)
-
 //echart选项
 const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
-const createOption = (list) => {
+const createOption = (axisX:string[],axisY:number[]) => {
   return {
     toolbox: {
       show: true,
@@ -160,7 +103,7 @@ const createOption = (list) => {
           alignWithLabel: true
         },
         // prettier-ignore
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日',]
+        data:axisX
       }
     ],
     yAxis: [
@@ -187,17 +130,15 @@ const createOption = (list) => {
         name: '金额',
         type: 'line',
         yAxisIndex: 0,
-        data: [...list]
+        data: [...axisY]
       }
     ]
   };
 }
-const countType = computed(() => {
-  return store.state.countType
-})
 
-const optionIncome = createOption(incomeList)
-const optionExpenditure = createOption(expenditureList)
+
+const optionIncome = createOption(createDateX("year")!,incomeList as number[])
+const optionExpenditure = createOption(createDateX("year")!,expenditureList as number[])
 
 </script>
 
@@ -211,18 +152,21 @@ const optionExpenditure = createOption(expenditureList)
   > .countType {
     background-color: #202020;
   }
-  >.inner{
+
+  > .inner {
     width: 100%;
     padding: 10px;
     background-color: #2a2a2a;
-    >.transWrap{
+
+    > .transWrap {
       transition: all 250ms;
       display: block;
       width: 100%;
     }
+
     position: relative;
 
-    #incomeChart{
+    #incomeChart {
       transform: translateX(100vw);
       position: absolute;
       top: 0;
@@ -238,10 +182,12 @@ const optionExpenditure = createOption(expenditureList)
   width: 100%;
   height: 300px;
 }
-.incomeOpen{
+
+.incomeOpen {
   transform: translateX(-100vw);
 }
-.expenditureClose{
+
+.expenditureClose {
   transform: translateX(-100vw);
 }
 </style>

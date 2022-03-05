@@ -11,7 +11,7 @@
       <div class="expenditure" :class="{'exOpen':countType==='expenditure','exClose':countType!=='expenditure'}">
         <div v-for="(value,key) in sortedExpenditure" class="list"
              :key="key">
-          <div class="nav">{{ key }}<span>支出￥{{value[value.length-1]}}</span></div>
+          <div class="nav">{{ key }}<span>支出￥{{ value[value.length - 1] }}</span></div>
           <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
                :key="index">
             <div class="left">
@@ -33,7 +33,7 @@
       <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
         <div v-for="(value,key) in sortedIncomeList" class="list"
              :key="key">
-          <div class="nav">{{ key }}<span>支出￥{{value[value.length-1]}}</span></div>
+          <div class="nav">{{ key }}<span>支出￥{{ value[value.length - 1] }}</span></div>
           <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
                :key="index">
             <div class="left">
@@ -63,18 +63,20 @@ import {useStore} from "vuex";
 import {computed, onBeforeUnmount} from "vue";
 import dayjs from "dayjs";
 import {result} from "./lib/fetchData";
-
-const store=useStore()
+const store = useStore()
 //获取分组切排好序的所有初次加载时的数据
-const {sortedIncomeList,sortedExpenditure}=result()
+const {sortedIncomeList, sortedExpenditure} = result()
 //是否展示
+
 const countType = computed(() => {
   return store.state.countType
 })
 onBeforeUnmount(() => {
   store.commit("initial")
 })
+
 </script>
+
 
 <style lang="scss" scoped>
 .detail-wrap {
@@ -114,6 +116,7 @@ onBeforeUnmount(() => {
       width: 100%;
       transition: all 250ms;
     }
+
     .content {
       background-color: #202020;
       padding: 10px 20px;
