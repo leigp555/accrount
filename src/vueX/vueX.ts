@@ -6,7 +6,7 @@ export type stateObj = {
     iconNumber: string,
     node: string,
     nodeTime: string,
-    countMoney: number
+    countMoney: number,
 }
 
 export const store = createStore({
