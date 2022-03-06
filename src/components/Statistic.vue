@@ -6,8 +6,8 @@
         <Tab title="收入"></Tab>
       </Tabs>
     </div>
-    <div class="button">
-      <button @click="toggle('week')">按周</button>
+    <div class="button" @click="change">
+      <button id="statisticFist" @click="toggle('week')">按周</button>
       <button @click="toggle('month')">按月</button>
       <button @click="toggle('year')">按年</button>
     </div>
@@ -27,24 +27,26 @@
       <MoneyRanking :data="expenditureShowData" :dataType="type"/>
     </div>
     <div class="rank">
-      <MoneyRanking :data="incomeShowData" v-if="countType==='income'" :dataType="type" />
+      <MoneyRanking :data="incomeShowData" v-if="countType==='income'" :dataType="type"/>
     </div>
   </div>
 
 </template>
 
 <script lang="ts" setup>
+
 import Tabs from "./lib/Tabs.vue";
 import Tab from "./lib/Tab.vue";
 import EChart from "./lib/EChart.vue";
 import {result} from "./lib/fetchData";
-import {computed, onBeforeUnmount,  ref} from "vue";
+import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 import MoneyRanking from "./lib/MoneyRanking.vue";
 import {useStore} from "vuex";
 import dayjs from "dayjs";
 import {handleDataX} from "./lib/statistic";
 
 const store = useStore()
+const first = ref<HTMLDivElement>()
 //store中获取金额类型
 const countType = computed(() => {
   return store.state.countType
@@ -143,20 +145,20 @@ const createOption = (axisX: string[], axisY: number[]) => {
 
 //根据不同统计类型方会相应的数据
 const type = ref<"year" | "month" | "week">("week")
-const outer =computed(()=>{
+const outer = computed(() => {
   return handleDataX(type.value, sortedIncomeList, sortedExpenditure, currentTime)!
 })
 
-const expenditureShowData=computed(()=>{
+const expenditureShowData = computed(() => {
   return outer.value.expenditureShowData
 })
-const  incomeShowData=computed(()=>{
+const incomeShowData = computed(() => {
   return outer.value.incomeShowData
 })
-const expenditureList=computed(()=>{
+const expenditureList = computed(() => {
   return outer.value.expenditureList
 })
-const incomeList=computed(()=>{
+const incomeList = computed(() => {
   return outer.value.incomeList
 })
 const toggle = (countType: "year" | "month" | "week") => {
@@ -171,7 +173,21 @@ const optionIncome = computed(() => {
 const optionExpenditure = computed(() => {
   return createOption(createDateX(type.value)!, expenditureList.value as number[])
 })
-
+const lastEl = ref<HTMLDivElement>()
+onMounted(() => {
+  //@ts-ignore
+  lastEl.value = document.getElementById("statisticFist")
+  console.log(lastEl.value)
+  lastEl.value!.classList.add("first")
+})
+const change = (e: Event) => {
+  lastEl.value && lastEl.value!.classList.remove("first")
+  const el = e.target as HTMLDivElement
+  if (el.tagName.toLowerCase() === "button") {
+    el.classList.add("first")
+  }
+  lastEl.value = el
+}
 //组件消亡时初始化组件
 onBeforeUnmount(() => {
   store.commit("initial")
@@ -184,22 +200,34 @@ onBeforeUnmount(() => {
   height: 100%;
   background-color: inherit;
   color: white;
+
   > .countType {
     background-color: #202020;
     padding-top: 20px;
   }
-  >.button {
+
+  > .button {
     color: white;
     display: flex;
     justify-content: space-around;
     padding: 20px;
     align-items: center;
     gap: 20px;
-    >button{
+
+    > .first {
+      color: yellow;
+    }
+
+    > button {
       background-color: inherit;
       border: none;
+
+      &:focus {
+        color: yellow;
+      }
     }
   }
+
   > .inner {
     width: 100%;
     padding: 10px;

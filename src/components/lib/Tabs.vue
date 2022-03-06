@@ -15,7 +15,7 @@
 
 </template>
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref, toRefs, watchEffect} from "vue";
+import {computed, defineComponent, onMounted, ref,  watchEffect} from "vue";
 import {useStore} from "vuex";
 
 export default defineComponent({
@@ -91,7 +91,7 @@ export default defineComponent({
       > .title {
         display: flex;
         gap: 50px;
-        margin-bottom: 3px;
+        margin-bottom: 5px;
         font-size: 18px;
       }
 
@@ -99,7 +99,8 @@ export default defineComponent({
         position: absolute;
         bottom: 0;
         left: 0;
-        border: 1px solid green;
+        border: 1px solid yellow;
+        background-color: yellow;
         transition: all 250ms;
       }
     }
