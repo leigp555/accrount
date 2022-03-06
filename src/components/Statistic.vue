@@ -186,6 +186,7 @@ onBeforeUnmount(() => {
   color: white;
   > .countType {
     background-color: #202020;
+    padding-top: 20px;
   }
   >.button {
     color: white;

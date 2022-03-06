@@ -77,6 +77,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .rank-wrap {
+  padding-bottom: 150px;
   > .content-wrap {
     > .list {
       > .title {
@@ -84,7 +85,10 @@ export default defineComponent({
         padding: 15px 20px;
         display: flex;
         justify-content: space-between;
-        >p>span{margin-right: 10px}
+        >p>span{
+          margin-right: 10px;
+          font-size: 14px;
+        }
       }
 
       .content {
