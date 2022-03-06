@@ -6,10 +6,10 @@
         <Tab title="收入"></Tab>
       </Tabs>
     </div>
-    <div>
-      <button @click="toggle('week')">week</button>
-      <button @click="toggle('month')">month</button>
-      <button @click="toggle('year')">year</button>
+    <div class="button">
+      <button @click="toggle('week')">按周</button>
+      <button @click="toggle('month')">按月</button>
+      <button @click="toggle('year')">按年</button>
     </div>
     <div class="inner">
       <div class="transWrap" :class="{incomeOpen:countType==='income',incomeClose:countType==='expenditure'}">
@@ -133,16 +133,16 @@ const createOption = (axisX: string[], axisY: number[]) => {
     series: [
       {
         name: '金额',
-        type: 'line',
+        type: 'bar',
         yAxisIndex: 0,
-        data: [...axisY]
+        data: [...axisY],
       }
     ]
   };
 }
 
 //根据不同统计类型方会相应的数据
-const type = ref<"year" | "month" | "week">("week")
+const type = ref<"year" | "month" | "week">("month")
 const outer =computed(()=>{
   return handleDataX(type.value, sortedIncomeList, sortedExpenditure, currentTime)!
 })
@@ -179,20 +179,26 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-button {
-  background-color: red;
-}
-
 .statistic-wrap {
   width: 100%;
   height: 100%;
   background-color: inherit;
   color: white;
-
   > .countType {
     background-color: #202020;
   }
-
+  >.button {
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    align-items: center;
+    gap: 20px;
+    >button{
+      background-color: inherit;
+      border: none;
+    }
+  }
   > .inner {
     width: 100%;
     padding: 10px;

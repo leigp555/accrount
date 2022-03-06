@@ -124,8 +124,8 @@ export const handleDataX = (type: dateType, sortedIncomeList: hashType, sortedEx
         ////获取weekAxis
         const expenditureData = getData("month", createAxisHash("month", monthStart)!, sortedExpenditure)
         const incomeData = getData("month", createAxisHash("month", monthStart)!, sortedIncomeList)
-        const incomeList = getTotal(expenditureData!.axisHash, [])
-        const expenditureList = getTotal(incomeData!.axisHash, [])
+        const incomeList = getTotal(incomeData!.axisHash, [])
+        const expenditureList = getTotal(expenditureData!.axisHash, [])
         // console.log(incomeList)
         // console.log(expenditureList)
         const expenditureShowData = expenditureData!.selectedData
@@ -137,8 +137,8 @@ export const handleDataX = (type: dateType, sortedIncomeList: hashType, sortedEx
         const yearStart = dayjs(currentTime).subtract(orderIndex + 1, 'year')
         const expenditureData = getData("year", createAxisHash("year", yearStart)!, sortedExpenditure)
         const incomeData = getData("year", createAxisHash("year", yearStart)!, sortedIncomeList)
-        const incomeList = getTotal(expenditureData!.axisHash, [])
-        const expenditureList = getTotal(incomeData!.axisHash, [])
+        const incomeList = getTotal(incomeData!.axisHash, [])
+        const expenditureList = getTotal(expenditureData!.axisHash, [])
         const expenditureShowData = expenditureData!.selectedData
         const incomeShowData = incomeData!.selectedData
         return {expenditureShowData, incomeShowData, expenditureList, incomeList}
