@@ -22,8 +22,7 @@
 </template>
 
 <script lang="ts" >
-import {defineComponent, ref} from "vue";
-import {stateObj} from "../../vueX/vueX";
+import {defineComponent, toRefs} from "vue";
 import dayjs from "dayjs";
 
 export default defineComponent({
@@ -31,8 +30,7 @@ export default defineComponent({
     data:Object
   },
   setup(props){
-    const data=ref<stateObj[]>(props.data)
-
+    const {data}=toRefs(props)
     return {data,dayjs}
   }
 })

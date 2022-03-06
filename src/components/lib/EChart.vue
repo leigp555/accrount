@@ -15,7 +15,7 @@ import {
 } from 'echarts/components';
 import {LabelLayout, UniversalTransition} from 'echarts/features';
 import {CanvasRenderer} from 'echarts/renderers';
-import {defineComponent,onMounted, toRefs} from "vue";
+import {defineComponent, onMounted, toRefs, watchEffect} from "vue";
 export default defineComponent({
   props:{
     option:Object,
@@ -29,8 +29,10 @@ export default defineComponent({
       CanvasRenderer,ToolboxComponent
     ]);
     onMounted(() => {
-      const myChart = echarts.init(document.getElementById(root.value)!);
-      option.value&&myChart.setOption(option.value)
+      const myChart = echarts.init(document.getElementById(root.value!)!);
+      watchEffect(()=>{
+        option.value&&myChart.setOption(option.value)
+      })
     })
   }
 })
