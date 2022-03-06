@@ -70,81 +70,79 @@ const createDateX = (type: string) => {
 }
 
 //echart选项
-const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
+
 const createOption = (axisX: string[], axisY: number[]) => {
   return {
+    tooltip: {
+      trigger: 'axis'
+    },
     toolbox: {
       show: true,
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross'
-        }
-      },
       feature: {
-        magicType: {
-          type: ["bar", "line"]
-        }
+        magicType: {show: true, type: ['line', 'bar']},
+        saveAsImage: {show: true}
       },
       orient: "horizontal",
-      itemSize: 20,
       itemGap: 10,
       showTitle: false,
-      right: 25,
-      iconStyle: {
-        color: "#73c0de"
-      }
-    },
-    color: colors,
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross'
-      }
+      right: 15,
     },
 
+    calculable: true,
+    grid: {
+      show: false,
+      left: "15%",
+      right: "8%",
+      bottom: "30px",
+    },
     xAxis: [
       {
         type: 'category',
-        axisTick: {
-          alignWithLabel: true
-        },
         // prettier-ignore
-        data: axisX
-      }
+        data: axisX,
+        axisLine: {
+          show: false,
+          lineStyle: {
+            color: "#d3c8c8"
+          }
+        },
+        axisTick: {
+          show: false
+        }
+      },
     ],
     yAxis: [
       {
         type: 'value',
-        name: '金额',
-        position: 'left',
-        alignTicks: true,
-        minInterval: 100,
         axisLine: {
           show: false,
           lineStyle: {
-            color: colors[1]
+            color: "#d3c8c8"
           }
-        },
-        axisLabel: {
-          formatter: '{value} ',
-          margin: -5
         }
       }
     ],
+    color:"yellow",
     series: [
       {
         name: '金额',
         type: 'bar',
-        yAxisIndex: 0,
         data: [...axisY],
-      }
+
+        markPoint: {
+          data: [
+            {type: 'max', name: 'Max'},
+            {type: 'min', name: 'Min'}
+          ]
+        },
+      },
     ]
   };
-}
 
+
+}
 //根据不同统计类型方会相应的数据
-const type = ref<"year" | "month" | "week">("week")
+const type = ref<"year" | "month" | "week">("month")
 const outer = computed(() => {
   return handleDataX(type.value, sortedIncomeList, sortedExpenditure, currentTime)!
 })
@@ -177,7 +175,6 @@ const lastEl = ref<HTMLDivElement>()
 onMounted(() => {
   //@ts-ignore
   lastEl.value = document.getElementById("statisticFist")
-  console.log(lastEl.value)
   lastEl.value!.classList.add("first")
 })
 const change = (e: Event) => {

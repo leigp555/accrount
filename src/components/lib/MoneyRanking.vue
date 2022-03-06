@@ -1,7 +1,7 @@
 <template>
   <div class="rank-wrap">
     <div class="content-wrap">
-      <div v-for="(item,key,index) in dataX" class="list" :key="key">
+      <div v-for="(item,key) in dataX" class="list" :key="key">
         <div class="title" v-if="dataType==='week'"><p><span>{{ key }}</span><span>{{weekCount(key)}}</span></p><span>合计￥{{ item[item.length - 1] }}</span></div>
         <div class="title" v-else-if="dataType==='month'"><p><span>{{ dayjs(key).format("YYYY-MM") }}</span><span>月份</span></p><span>合计￥{{ item[item.length - 1] }}</span></div>
         <div class="title" v-else><p><span>{{ dayjs(key).format("YYYY") }}</span><span>年</span></p><span>合计￥{{ item[item.length - 1] }}</span></div>
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, toRefs, watchEffect} from "vue";
+import {computed, defineComponent, toRefs} from "vue";
 import dayjs from "dayjs";
 import {hashType} from "./type";
 
