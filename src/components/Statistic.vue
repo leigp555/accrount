@@ -150,6 +150,7 @@ const outer =computed(()=>{
 const expenditureShowData=computed(()=>{
   return outer.value.expenditureShowData
 })
+console.log(expenditureShowData.value)
 const  incomeShowData=computed(()=>{
   return outer.value.incomeShowData
 })

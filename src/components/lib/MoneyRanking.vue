@@ -1,47 +1,55 @@
 <template>
-<div class="rank-wrap">
-  <div class="content-wrap">
-    <div v-for="(item,key) in data" class="list" :key="key">
-      <div class="content">
-        <div class="left">
-          <div class="svgWrap">
-            <svg class="icon" aria-hidden="true">
-              <use :xlink:href="`#icon-${item.iconNumber}`"></use>
-            </svg>
+  <div class="rank-wrap">
+    <div class="content-wrap">
+      <div v-for="(item,key,index) in data" class="list" :key="key">
+        <div class="title"><span>{{ key }}</span><span>合计￥{{item[item.length-1]}}</span></div>
+        <div class="item" v-for="(x,index) in item.slice(0,item.length-1)" :key="index">
+          <div class="content">
+            <div class="left">
+              <div class="svgWrap">
+                <svg class="icon" aria-hidden="true">
+                  <use :xlink:href="`#icon-${x.iconNumber}`"></use>
+                </svg>
+              </div>
+              <p>{{ x.node }}</p>
+            </div>
+            <div class="right">
+              <p>￥{{ x.countMoney }}</p>
+              <span>{{ dayjs(x.nodeTime).format("HH:mm") }}</span>
+            </div>
           </div>
-          <p>{{ item.node }}</p>
-        </div>
-        <div class="right">
-          <p>￥{{ item.countMoney }}</p>
-          <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import {defineComponent, toRefs} from "vue";
 import dayjs from "dayjs";
 
 export default defineComponent({
-  props:{
-    data:Object
+  props: {
+    data: Object
   },
-  setup(props){
-    const {data}=toRefs(props)
-    return {data,dayjs}
+  setup(props) {
+    const {data} = toRefs(props)
+    return {data, dayjs}
   }
 })
 </script>
 
 <style lang="scss" scoped>
-.rank-wrap{
-  >.content-wrap {
-    >.list{
-      border-bottom: 1px solid white;
-      >.content {
+.rank-wrap {
+  > .content-wrap {
+    > .list {
+      > .title {
+        background-color: #2a2a2a;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .content {
         background-color: #202020;
         padding: 10px 20px;
         display: flex;
@@ -60,6 +68,7 @@ export default defineComponent({
             border-radius: 35%;
           }
         }
+
         .right {
           display: inline-flex;
           flex-wrap: wrap;
@@ -76,6 +85,7 @@ export default defineComponent({
 
   }
 }
+
 .icon {
   width: 40px;
   height: 40px;
