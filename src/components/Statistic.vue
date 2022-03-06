@@ -24,10 +24,10 @@
       </div>
     </div>
     <div class="rank" v-if="countType==='expenditure'">
-      <MoneyRanking :data="expenditureShowData"/>
+      <MoneyRanking :data="expenditureShowData" :dataType="type"/>
     </div>
     <div class="rank">
-      <MoneyRanking :data="incomeShowData" v-if="countType==='income'"/>
+      <MoneyRanking :data="incomeShowData" v-if="countType==='income'" :dataType="type" />
     </div>
   </div>
 
@@ -142,7 +142,7 @@ const createOption = (axisX: string[], axisY: number[]) => {
 }
 
 //根据不同统计类型方会相应的数据
-const type = ref<"year" | "month" | "week">("month")
+const type = ref<"year" | "month" | "week">("week")
 const outer =computed(()=>{
   return handleDataX(type.value, sortedIncomeList, sortedExpenditure, currentTime)!
 })
@@ -150,7 +150,6 @@ const outer =computed(()=>{
 const expenditureShowData=computed(()=>{
   return outer.value.expenditureShowData
 })
-console.log(expenditureShowData.value)
 const  incomeShowData=computed(()=>{
   return outer.value.incomeShowData
 })

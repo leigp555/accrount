@@ -1,8 +1,10 @@
 <template>
   <div class="rank-wrap">
     <div class="content-wrap">
-      <div v-for="(item,key,index) in data" class="list" :key="key">
-        <div class="title"><span>{{ key }}</span><span>合计￥{{item[item.length-1]}}</span></div>
+      <div v-for="(item,key,index) in dataX" class="list" :key="key">
+        <div class="title" v-if="dataType==='week'"><p><span>{{ key }}</span><span>{{weekCount(key)}}</span></p><span>合计￥{{ item[item.length - 1] }}</span></div>
+        <div class="title" v-else-if="dataType==='month'"><p><span>{{ dayjs(key).format("YYYY-MM") }}</span><span>月份</span></p><span>合计￥{{ item[item.length - 1] }}</span></div>
+        <div class="title" v-else><p><span>{{ dayjs(key).format("YYYY") }}</span><span>年</span></p><span>合计￥{{ item[item.length - 1] }}</span></div>
         <div class="item" v-for="(x,index) in item.slice(0,item.length-1)" :key="index">
           <div class="content">
             <div class="left">
@@ -25,16 +27,50 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, toRefs} from "vue";
+import {computed, defineComponent, toRefs, watchEffect} from "vue";
 import dayjs from "dayjs";
+import {hashType} from "./type";
 
 export default defineComponent({
   props: {
-    data: Object
+    data: Object,
+    dataType:String
   },
   setup(props) {
-    const {data} = toRefs(props)
-    return {data, dayjs}
+    const {data,dataType} = toRefs(props)
+    //把对象数据倒序一下
+    const reserveData = (obj: hashType) => {
+      const sorted = {}
+      const arr = Object.keys(data.value!).sort((a,b)=>{
+        if(dayjs(a).isBefore(b)){
+          return 1
+        }else {
+          return -1
+        }
+      })
+      for(let i=0;i<arr.length;i++){
+        //@ts-ignore
+        sorted[arr[i]]=obj[arr[i]]
+      }
+      return sorted
+    }
+    const dataX=computed(()=>{
+      return reserveData(data.value!)
+    })
+    const weekCount=(time:string)=>{
+      const hash:{[key:string]:string}={
+        "0":"星期日",
+        "1":"星期一",
+        "2":"星期二",
+        "3":"星期三",
+        "4":"星期四",
+        "5":"星期五",
+        "6":"星期六",
+      }
+      const string=dayjs(time).day().toString()
+      return hash[string]
+    }
+    return {dataX, dayjs,dataType,weekCount}
   }
 })
 </script>
@@ -48,7 +84,9 @@ export default defineComponent({
         padding: 15px 20px;
         display: flex;
         justify-content: space-between;
+        >p>span{margin-right: 10px}
       }
+
       .content {
         background-color: #202020;
         padding: 10px 20px;
