@@ -1,7 +1,6 @@
 <template>
   <div class="icon-wrap">
     <div class="inner">
-
       <div class="svgList" :class="{expenditureRight:countType==='expenditure'}">
         <div class="svgWrap" v-for="(item,index) in incomeList" :key="index" @click="toggle($event,item)">
           <svg class="icon">
@@ -69,11 +68,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 .icon-wrap {
   width: 100%;
-  margin-top: 20px;
+  padding-top: 20px;
   min-height: 30vh;
   overflow-y: auto;
   overflow-x: hidden;
-  border-bottom: 1px solid black;
+  background-color: #202020;
 
   > .inner {
     height: 100%;
@@ -122,6 +121,10 @@ export default defineComponent({
         height: 12vw;
         justify-content: center;
         align-items: center;
+        display: inline-block;
+        padding: 10px;
+        background-color: #342f2c;
+        border-radius: 35%;
       }
       > .selectedIcon {
         background-color: green;
@@ -132,8 +135,8 @@ export default defineComponent({
 }
 
 .icon {
-  width: 10vw;
-  height: 10vw;
+  width: 40px;
+  height: 40px;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;

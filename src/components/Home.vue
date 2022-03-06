@@ -41,6 +41,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home-wrap{
-  background-color:white;
+  background-color: #202020;
 }
 </style>

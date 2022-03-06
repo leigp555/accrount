@@ -15,7 +15,8 @@ import Tabs from "./lib/Tabs.vue"
 
 <style lang="scss" scoped>
 .typeComponent {
-  padding-top: 10px;
-  background-color: #ccc076;
+  padding-top: 15px;
+  background-color:  #202020;
+  color: #df9853;
 }
 </style>
