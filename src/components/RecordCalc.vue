@@ -1,25 +1,25 @@
 <template>
   <div class="home-recordTime-wrap">
     <div class="showMoney">
-      <div class="money">{{ result?result:0 }}</div>
+      <div class="money">￥{{ result ? result : 0 }}</div>
     </div>
     <div class="money-calc">
       <div @click="onClick" class="inputPad">
+        <button>6</button>
         <button>7</button>
         <button>8</button>
         <button>9</button>
-        <button>5</button>
-        <button>6</button>
-        <button>-</button>
         <button>3</button>
         <button>4</button>
-        <button>+</button>
+        <button>5</button>
+        <button>-</button>
+        <button>0</button>
         <button>1</button>
         <button>2</button>
+        <button>+</button>
         <button>.</button>
-        <button>0</button>
         <button>清除</button>
-        <button>完成</button>
+        <button class="complete">完成</button>
       </div>
     </div>
   </div>
@@ -33,65 +33,75 @@ import {useStore} from "vuex";
 export default defineComponent({
   name: "RecordCalc",
   setup() {
-    const store=useStore()
-    const result=ref<string>("")
-    const onClick=(e:Event)=>{
+    const store = useStore()
+    const result = ref<string>("")
+    const onClick = (e: Event) => {
       //@ts-ignore
-      const text=e.target!.innerText as string
+      const text = e.target!.innerText as string
       try {
-        calc(result,text)
-      }catch (error){
+        calc(result, text)
+      } catch (error) {
         alert("error")
       }
-     if(text==="完成"){
-       const resultNumber=parseInt(result.value)
-       store.commit("modifyCountMoney",resultNumber)
-       store.dispatch("getAllDate")
-       if(store.state.allData.iconNumber){
-         store.dispatch("saveData")
-         store.commit("initial")
-         result.value=""
-         window.alert("记录成功")
-       }else {
-         window.alert("请选择一个图标")
-       }
+      if (text === "完成") {
+        const resultNumber = parseInt(result.value)
+        store.commit("modifyCountMoney", resultNumber)
+        store.dispatch("getAllDate")
+        if (store.state.allData.iconNumber) {
+          store.dispatch("saveData")
+          store.commit("initial")
+          result.value = ""
+          window.alert("记录成功")
+        } else {
+          window.alert("请选择一个图标")
+        }
 
-     }
+      }
     }
-    return {onClick,result}
+    return {onClick, result}
   }
 })
 </script>
 
 <style lang="scss" scoped>
 .home-recordTime-wrap {
-  height: 100%;
-  background-color:#efbd5e;
-  border: 1px solid #efbd5e;
+  background-color: #efbd5e;
+  padding-top: 10px;
+
   > .showMoney {
     display: flex;
     justify-content: right;
     align-items: center;
     padding: 14px;
-    border: 1px solid black;
-    background-color:#efbd5e;
+    margin: 0 2vw;
+    background-color: #fdefd2;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
+    border-radius: 10px;
   }
 
   > .money-calc {
+    margin: 10px 2vw;
+
     .inputPad {
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-wrap: wrap;
+      margin-right: -4vw;
 
       > button {
-        flex-grow: 1;
+        margin-bottom: 2vw;
+        margin-right: 4vw;
         font-size: 18px;
         padding: 15px 0;
         text-align: center;
-        width: 25vw;
+        width: 21vw;
         border: 1px solid #999;
-        background-color:#f5bc47;
+        background-color: #fdefd2;
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
+        border-radius: 10px;
+      }
+
+      > .complete {
+        width: 46vw;
       }
     }
   }
