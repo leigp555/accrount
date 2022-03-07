@@ -1,6 +1,5 @@
 import {createStore} from 'vuex'
 import dayjs from "dayjs";
-
 export type stateObj = {
     countType: string,
     iconNumber: string,
@@ -19,6 +18,7 @@ export const store = createStore({
             countMoney: 0,
             allData: {},
             fetchDate: [],
+            iconNode: ""
         }
     },
     mutations: {
@@ -57,7 +57,10 @@ export const store = createStore({
             state.countMoney = 0
             state.fetchDate = []
             state.allData = {}
-        }
+        },
+        modifyIconNode(state, payload) {
+            state.iconNode = payload
+        },
     },
     actions: {
         getAllDate(ctx) {
@@ -70,6 +73,12 @@ export const store = createStore({
             const string = JSON.stringify(state.fetchDate)
             window.localStorage.setItem("save-record", string)
         },
+        getNode({commit, state}) {
+            if (state.node === "") {
+                commit("modifyNode", state.iconNode)
+                commit("modifyIconNode", "")
+            }
+        }
     }
 
 

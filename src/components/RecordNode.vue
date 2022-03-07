@@ -12,6 +12,7 @@
 <script lang="ts">
 import {computed, defineComponent, ref, watchEffect} from "vue";
 import {useStore} from "vuex";
+import {expenditureNode, incomeNode} from "./lib/iconNode";
 
 export default defineComponent({
   name: "RecordNode",
@@ -26,6 +27,16 @@ export default defineComponent({
     }
     watchEffect(()=>{
       if(!recordNode.value)node.value=""
+    })
+    const iconNodeX=computed(()=>{
+      if(store.state.countType==="expenditure"&&expenditureNode[store.state.iconNumber]){
+         return expenditureNode[store.state.iconNumber]
+      }else if(store.state.countType==="income"&&incomeNode[store.state.iconNumber]){
+        return incomeNode[store.state.iconNumber]
+      }
+    })
+    watchEffect(()=>{
+      store.commit("modifyIconNode",iconNodeX.value)
     })
     return {node,commit}
   }

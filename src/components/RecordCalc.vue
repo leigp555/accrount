@@ -44,11 +44,14 @@ export default defineComponent({
         alert("error")
       }
       if (text === "完成") {
+        store.dispatch("getNode")
         const resultNumber = parseInt(result.value)
         store.commit("modifyCountMoney", resultNumber)
         store.dispatch("getAllDate")
         if (store.state.allData.iconNumber) {
+          // console.log(store.state.node)
           store.dispatch("saveData")
+          // console.log(store.state.node)
           store.commit("initial")
           result.value = ""
           window.alert("记录成功")

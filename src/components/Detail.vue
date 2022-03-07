@@ -1,7 +1,12 @@
 <template>
-
+<!--  <div class="noRecord" v-if="Object.keys(sortedIncomeList)[0]">-->
+<!--    <svg class="icon" aria-hidden="true">-->
+<!--      <use xlink:href="#icon-noRecord"></use>-->
+<!--    </svg>-->
+<!--    <p>暂无记录，快去记一笔吧</p>-->
+<!--  </div>-->
   <div class="detail-wrap">
-    <div class="countType">
+    <div class="countType" >
       <Tabs>
         <Tab title="支出"></Tab>
         <Tab title="收入"></Tab>
@@ -67,7 +72,6 @@ const store = useStore()
 //获取分组切排好序的所有初次加载时的数据
 const {sortedIncomeList, sortedExpenditure} = result()
 //是否展示
-
 const countType = computed(() => {
   return store.state.countType
 })
@@ -86,7 +90,6 @@ onBeforeUnmount(() => {
   padding-bottom: 80px;
   background-color: #202020;
   position: relative;
-
   > .countType {
     position: fixed;
     top: 0;
@@ -193,5 +196,24 @@ onBeforeUnmount(() => {
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+}
+.noRecord{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  left: 0;
+  top: 30%;
+  >.icon {
+    width: 50px;
+    height:50px;
+    margin-bottom: 10px;
+    clip-path: circle(100%);
+    background-color:#202020 ;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
 }
 </style>

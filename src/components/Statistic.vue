@@ -142,7 +142,7 @@ const createOption = (axisX: string[], axisY: number[]) => {
 
 }
 //根据不同统计类型方会相应的数据
-const type = ref<"year" | "month" | "week">("month")
+const type = ref<"year" | "month" | "week">("week")
 const outer = computed(() => {
   return handleDataX(type.value, sortedIncomeList, sortedExpenditure, currentTime)!
 })

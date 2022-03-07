@@ -27,6 +27,7 @@
 <script lang="ts">
 import {computed, defineComponent, ref, watchEffect} from "vue";
 import {useStore} from "vuex";
+import {expenditureNode, incomeNode} from "./lib/iconNode";
 
 export default defineComponent({
   name: "RecordIcon",
@@ -48,39 +49,6 @@ export default defineComponent({
       for (let i = 1; i < 17; i++) {
         expenditureList[i] = `icon${i}`
       }
-    }
-    const expenditureNode = {
-      "icon1": "旅游",
-      "icon2": "礼物",
-      "icon3": "运动",
-      "icon4": "购物",
-      "icon5": "水果",
-      "icon6": "相机",
-      "icon7": "零食",
-      "icon8": "蔬菜",
-      "icon9": "餐饮",
-      "icon10": "通讯费",
-      "icon11": "服饰",
-      "icon12": "服饰",
-      "icon13": "居家",
-      "icon14":"娱乐",
-      "icon15":"美容",
-      "icon16":"日用",
-      "icon17": "加油",
-      "icon18":"自定义",
-    };
-    const incomeNode={
-      "income1":"工资",
-      "income2":"工作",
-      "income3":"房租",
-      "income4":"投资",
-      "income5":"理财",
-      "income6":"红包",
-      "income7":"中奖",
-      "income8":"兼职",
-      "income9":"副业",
-      "income10":"礼金",
-      "income11":"奖金",
     }
     incomeListContent()
     expenditureListContent()
