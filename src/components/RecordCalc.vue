@@ -65,17 +65,16 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home-recordTime-wrap {
-  border: 1px solid #999;
-  margin-top: 10px;
-  margin-bottom: 6em;
   height: 100%;
-
+  background-color:#efbd5e;
+  border: 1px solid #efbd5e;
   > .showMoney {
     display: flex;
     justify-content: right;
     align-items: center;
     padding: 14px;
     border: 1px solid black;
+    background-color:#efbd5e;
   }
 
   > .money-calc {
@@ -92,6 +91,7 @@ export default defineComponent({
         text-align: center;
         width: 25vw;
         border: 1px solid #999;
+        background-color:#f5bc47;
       }
     }
   }

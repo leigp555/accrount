@@ -6,6 +6,7 @@
           <svg class="icon">
             <use :xlink:href="`#icon-${item}`"></use>
           </svg>
+          <span>{{incomeNode[item]}}</span>
         </div>
 
       </div>
@@ -16,9 +17,8 @@
           <svg class="icon">
             <use :xlink:href="`#icon-${item}`"></use>
           </svg>
+          <span>{{expenditureNode[item]}}</span>
         </div>
-
-
       </div>
     </div>
   </div>
@@ -49,6 +49,39 @@ export default defineComponent({
         expenditureList[i] = `icon${i}`
       }
     }
+    const expenditureNode = {
+      "icon1": "旅游",
+      "icon2": "礼物",
+      "icon3": "运动",
+      "icon4": "购物",
+      "icon5": "水果",
+      "icon6": "相机",
+      "icon7": "零食",
+      "icon8": "蔬菜",
+      "icon9": "餐饮",
+      "icon10": "通讯费",
+      "icon11": "服饰",
+      "icon12": "服饰",
+      "icon13": "居家",
+      "icon14":"娱乐",
+      "icon15":"美容",
+      "icon16":"日用",
+      "icon17": "加油",
+      "icon18":"自定义",
+    };
+    const incomeNode={
+      "income1":"工资",
+      "income2":"工作",
+      "income3":"房租",
+      "income4":"投资",
+      "income5":"理财",
+      "income6":"红包",
+      "income7":"中奖",
+      "income8":"兼职",
+      "income9":"副业",
+      "income10":"礼金",
+      "income11":"奖金",
+    }
     incomeListContent()
     expenditureListContent()
     watchEffect(() => {
@@ -60,7 +93,7 @@ export default defineComponent({
       selectedIcon.value = e.currentTarget as HTMLDivElement
       selectedIcon.value.classList.add("selectedIcon")
     }
-    return {incomeList, expenditureList, countType, toggle}
+    return {incomeList, expenditureList, countType, toggle,expenditureNode,incomeNode}
   }
 })
 </script>
@@ -86,8 +119,6 @@ export default defineComponent({
     left: 0;
 
     > .svgList {
-
-
       margin-right: -3vw;
       transition: all 250ms;
       display: inline-block;
@@ -113,21 +144,24 @@ export default defineComponent({
 
       > .svgWrap {
         display: inline-flex;
-        margin-right: 3vw;
-        margin-bottom: 25px;
-        clip-path: circle(50%);
-        background-color: rgba(255, 205, 67, .5);
-        width: 12vw;
-        height: 12vw;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        display: inline-block;
-        padding: 10px;
-        background-color: #342f2c;
+        margin-right: 3vw;
+        margin-bottom: 25px;
+        background-color: rgba(255, 205, 67, .5);
+        width: 15vw;
+        height: 15vw;
+        background-color: #202020;
+        >span{
+          color: white;
+          font-size: 12px;
+          white-space: nowrap;
+        }
         border-radius: 35%;
       }
       > .selectedIcon {
-        background-color: green;
+        background-color:  #2a2a2a;
       }
     }
 
@@ -135,8 +169,9 @@ export default defineComponent({
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  clip-path: circle(50%);
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;

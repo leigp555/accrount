@@ -1,9 +1,11 @@
 <template>
   <div class="home-node-wrap">
-    <label>
-      <span>记账日期：</span>
-      <input type="datetime-local"  v-model="time">
-    </label>
+    <div class="inner">
+      <label>
+        <span>记账日期：</span>
+        <input type="datetime-local"  v-model="time">
+      </label>
+    </div>
   </div>
 </template>
 
@@ -29,13 +31,21 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home-node-wrap{
-  padding: 10px;
-  display: inline-flex;
-  align-items: center;
-  >label{
-    >input{
-      border: none;
+  background-color:#2a2a2a;
+  padding: 5px 0;
+  color: white;
+  >.inner{
+    display: inline-flex;
+    padding: 10px;
+    align-items: center;
+    >label{
+      >input{
+        border: none;
+        background-color: inherit;
+        color: white;
+      }
     }
   }
 }
+
 </style>

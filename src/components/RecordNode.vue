@@ -1,10 +1,12 @@
 <template>
-<div class="home-node-wrap">
-  <label>
-    <span>备注：</span>
-    <input type="text" placeholder="备注一下吧..." v-model="node" @change="commit">
-  </label>
-</div>
+  <div class="home-node-wrap">
+    <div class="inner">
+      <label>
+        <span>备注：</span>
+        <input type="text" placeholder="点击备注..." v-model="node" @change="commit">
+      </label>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,14 +34,24 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home-node-wrap{
-  margin-top: 20px;
-  padding: 10px;
-  display: inline-flex;
+  display: flex;
+  justify-content: start;
   align-items: center;
-  >label{
-    >input{
-      border: none;
+  background-color:#2a2a2a;
+  padding: 5px 0;
+  border-top: 1px solid #202020;
+  >.inner{
+    color: white;
+    padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    >label{
+      >input{
+        border: none;
+        background-color: inherit;
+      }
     }
   }
 }
+
 </style>
