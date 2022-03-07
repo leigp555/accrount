@@ -61,6 +61,10 @@ export const store = createStore({
         modifyIconNode(state, payload) {
             state.iconNode = payload
         },
+        saveData(state,payload){
+           const string= JSON.stringify(payload)
+            window.localStorage.setItem("save-record",string)
+        }
     },
     actions: {
         getAllDate(ctx) {

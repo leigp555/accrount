@@ -43,6 +43,10 @@ export default defineComponent({
         border: none;
         background-color: inherit;
         color: white;
+        &::-webkit-calendar-picker-indicator{
+         background-color: yellow;
+
+        }
       }
     }
   }
