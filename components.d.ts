@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Detail: typeof import('./src/components/Detail.vue')['default']
+    DetailVisible: typeof import('./src/components/lib/DetailVisible.vue')['default']
     Echart: typeof import('./src/components/lib/Echart.vue')['default']
     EChart: typeof import('./src/components/lib/EChart.vue')['default']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
