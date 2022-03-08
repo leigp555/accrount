@@ -200,10 +200,6 @@ onBeforeUnmount(() => {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
   > .countType {
     background-color: #202020;
     padding-top: 20px;
