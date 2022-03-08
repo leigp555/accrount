@@ -127,13 +127,14 @@ export default defineComponent({
         justify-content: center;
         align-items: center;
         margin-bottom: 20px;
+        gap: 5px;
         background-color: rgba(255, 205, 67, .5);
         width: 70px;
         height: 70px;
         background-color: #202020;
         >span{
           color: white;
-          font-size: 12px;
+          font-size: 14px;
           white-space: nowrap;
         }
         border-radius: 35%;
@@ -147,8 +148,8 @@ export default defineComponent({
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   clip-path: circle(50%);
   vertical-align: -0.15em;
   fill: currentColor;

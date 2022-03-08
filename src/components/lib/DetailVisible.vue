@@ -15,7 +15,7 @@
     </div>
     <div class="contentType">{{ itemInfo?.contentType }}</div>
     <div class="nav">
-      {{ dayjs(selectedItem.nodeTime).format("YYYY-MM-DD") }}<span>支出￥{{ selectedItem.countMoney }}</span></div>
+      <span>{{ dayjs(selectedItem.nodeTime).format("YYYY-MM-DD") }}</span><span>支出￥{{ selectedItem.countMoney }}</span></div>
     <div class="content">
       <div class="left">
         <div class="svgWrap">
@@ -112,7 +112,7 @@ const save = () => {
     padding: 10px 20px;
     font-size: 18px;
   }
-  >.nav{
+  >.nav>span{
     font-size: 16px;
   }
   > .content {
@@ -126,7 +126,7 @@ const save = () => {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-
+      font-size: 16px;
       > .svgWrap {
         display: inline-block;
         padding: 10px;
@@ -169,7 +169,7 @@ const save = () => {
       align-items: start;
       text-align: right;
       gap: 8px;
-
+      font-size: 14px;
       > label {
         > input {
           display: inline;
@@ -178,7 +178,7 @@ const save = () => {
           border: none;
           color: white;
           line-height: 30px;
-
+          font-size: 16px;
           &:focus {
             color: yellow;
           }

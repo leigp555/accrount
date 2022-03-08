@@ -86,9 +86,9 @@ export default defineComponent({
         padding: 15px 20px;
         display: flex;
         justify-content: space-between;
+        font-size: 16px;
         >p>span{
-          margin-right: 10px;
-          font-size: 14px;
+          font-size: 16px;
         }
       }
 
@@ -118,9 +118,11 @@ export default defineComponent({
           flex-direction: column;
           text-align: right;
           gap: 8px;
-
-          p {
-            font-size: 20px;
+          >p {
+            font-size: 16px;
+          }
+          >span{
+            font-size: 14px;
           }
         }
       }
