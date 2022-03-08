@@ -10,6 +10,9 @@ html, body {
   @media (max-width: 500px) {
     max-width: 400px;
     overflow: hidden;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 

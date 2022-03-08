@@ -81,6 +81,9 @@ export default defineComponent({
   padding-top: 10px;
   overflow-y: auto;
   overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   background-color: #202020;
   > .inner {
     display: flex;

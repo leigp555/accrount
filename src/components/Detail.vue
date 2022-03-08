@@ -95,6 +95,9 @@ onBeforeUnmount(() => {
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   padding-bottom: 80px;
   background-color: #202020;
   position: relative;
