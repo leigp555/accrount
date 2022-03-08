@@ -7,6 +7,7 @@ html, body {
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
   height: 100%;
+  overflow: hidden;
   @media (max-width: 500px) {
     max-width: 400px;
     overflow: hidden;

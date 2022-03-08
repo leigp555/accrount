@@ -42,7 +42,7 @@
 .account-app-wrap {
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
   top: 0;
   left: 0;

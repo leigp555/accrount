@@ -198,6 +198,9 @@ onBeforeUnmount(() => {
   color: white;
   overflow-y: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+
   &::-webkit-scrollbar {
     display: none;
   }
