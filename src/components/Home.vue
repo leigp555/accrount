@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onBeforeUnmount} from "vue";
+import {defineComponent, onBeforeUnmount, onMounted} from "vue";
 import RecordType from "./RecordType.vue";
 import RecordIcon from "./RecordIcon.vue";
 import RecordNode from "./RecordNode.vue";
@@ -34,6 +34,11 @@ export default defineComponent({
     const store = useStore()
     onBeforeUnmount(() => {
       store.commit("initial")
+    })
+    onMounted(()=>{
+      if(document.body.getBoundingClientRect().width>500){
+        window.alert("请使用手机浏览")
+      }
     })
   }
 })
