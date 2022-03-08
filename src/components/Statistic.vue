@@ -80,7 +80,6 @@ const createOption = (axisX: string[], axisY: number[]) => {
       show: true,
       feature: {
         magicType: {show: true, type: ['line', 'bar']},
-        saveAsImage: {show: true}
       },
       orient: "horizontal",
       itemGap: 10,
@@ -193,7 +192,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .statistic-wrap {
-  width: 100%;
+  overflow: hidden;
   height: 100%;
   background-color: inherit;
   color: white;

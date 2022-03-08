@@ -23,21 +23,18 @@
             <use :xlink:href="`#icon-${selectedItem.iconNumber}`"></use>
           </svg>
         </div>
-        <input type="text" v-model="modifyNode" id="nodeX" autofocus autocomplete="no">
+        <input type="text" v-model="modifyNode" id="nodeX" autocomplete="no" class="addBorder">
       </div>
       <div class="right">
         <label>
           <span>￥</span>
-          <input type="text" v-model.number="modifyMoney" id="moneyX" autofocus autocomplete="no">
+          <input type="text" v-model.number="modifyMoney" id="moneyX" autocomplete="no" class="addBorder">
         </label>
         <span>{{ dayjs(selectedItem.nodeTime).format("HH:mm") }}</span>
       </div>
     </div>
     <div class="buttonWrap">
-      <transition mode="out-in" name="fade">
-        <button class="buttonX" v-if="!edited" @click="toggle">编辑记录</button>
-        <button class="buttonX" v-else @click="save">保存编辑</button>
-      </transition>
+      <button class="buttonX"  @click="save">保存编辑</button>
     </div>
   </div>
 </template>
@@ -74,23 +71,14 @@ const itemInfo = computed(() => {
 })
 const modifyNode = ref(selectedItem.node)
 const modifyMoney = ref(selectedItem.countMoney)
-const edited = ref<boolean>(false)
-const toggle = () => {
-  edited.value = !edited.value
-  const input1 = document.getElementById("nodeX")
-  const input2 = document.getElementById("moneyX")
-  input1!.classList.add("addBorder")
-  input2!.classList.add("addBorder")
-}
 const save = () => {
-  edited.value = false
   const modifiedItem = Object.assign(selectedItem) as stateObj
   modifiedItem.countMoney = modifyMoney.value
   modifiedItem.node = modifyNode.value
-  const newData=Object.assign(fetchData)
+  const newData = Object.assign(fetchData)
   const index = newData.value.indexOf(selectedItem)
-  newData.value.splice(index,1,modifiedItem)
-  store.commit("saveData",newData.value)
+  newData.value.splice(index, 1, modifiedItem)
+  store.commit("saveData", newData.value)
   window.alert("修改成功")
   router.push('/detail')
 }
@@ -162,8 +150,12 @@ const save = () => {
         padding: 0 10px;
         line-height: 40px;
 
+        &:focus {
+          color: yellow;
+        }
+
         &.addBorder {
-          border-bottom: 2px solid yellow;
+          color: yellow;
         }
       }
     }
@@ -172,6 +164,7 @@ const save = () => {
       display: inline-flex;
       flex-wrap: wrap;
       flex-direction: column;
+      align-items: start;
       text-align: right;
       gap: 8px;
 
@@ -184,8 +177,12 @@ const save = () => {
           color: white;
           line-height: 30px;
 
+          &:focus {
+            color: yellow;
+          }
+
           &.addBorder {
-            border-bottom: 2px solid yellow;
+            color: yellow;
           }
 
         }
@@ -239,12 +236,4 @@ const save = () => {
     }
   }
 }
-.fade-enter-active, .fade-leave-active {
-  transition: all 250ms;
-}
-
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-}
-
 </style>

@@ -72,14 +72,14 @@ export default defineComponent({
   padding-top: 10px;
 
   > .showMoney {
-    display: flex;
-    justify-content: right;
-    align-items: center;
     padding: 14px;
     margin: 0 2%;
     background-color: #fdefd2;
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
     border-radius: 10px;
+    >.money{
+      text-align: right;
+    }
   }
 
   > .money-calc {

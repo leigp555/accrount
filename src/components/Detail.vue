@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
 .detail-wrap {
   color: white;
   height: 100%;
-  width: 100%;
+  overflow: hidden;
   padding-bottom: 80px;
   background-color: #202020;
   position: relative;

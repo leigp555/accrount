@@ -118,8 +118,8 @@ export default defineComponent({
         margin-right: 3vw;
         margin-bottom: 25px;
         background-color: rgba(255, 205, 67, .5);
-        width: 15vw;
-        height: 15vw;
+        width: 80px;
+        height: 80px;
         background-color: #202020;
         >span{
           color: white;
