@@ -1,6 +1,6 @@
 <template>
   <div class="detail-wrap">
-    <div class="noRecord" v-if="!Object.keys(sortedIncomeList)[0]">
+    <div class="noRecord" v-if="!shouldShow">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-noRecord"></use>
       </svg>
@@ -86,7 +86,11 @@ const countType = computed(() => {
 onBeforeUnmount(() => {
   store.commit("initial")
 })
-console.log(Object.keys(sortedIncomeList)[0]);
+const shouldShow=computed(()=>{
+  if(Object.keys(sortedIncomeList)[0]){
+    return true
+  }else return !!Object.keys(sortedExpenditure)[0];
+})
 </script>
 
 
