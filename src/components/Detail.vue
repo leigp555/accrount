@@ -16,7 +16,7 @@
       <div class="expenditure" :class="{'exOpen':countType==='expenditure','exClose':countType!=='expenditure'}">
         <div v-for="(value,key) in sortedExpenditure" class="list"
              :key="key">
-          <div class="nav">{{ key }}<span>支出￥{{ value[value.length - 1] }}</span></div>
+          <div class="nav"><span>{{ key }}</span><span>支出￥{{ value[value.length - 1] }}</span></div>
 
           <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
                :key="index">
@@ -41,7 +41,7 @@
       <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
         <div v-for="(value,key) in sortedIncomeList" class="list"
              :key="key">
-          <div class="nav">{{ key }}<span>支出￥{{ value[value.length - 1] }}</span></div>
+          <div class="nav"><span>{{ key }}</span><span>支出￥{{ value[value.length - 1] }}</span></div>
           <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
                :key="index">
             <router-link :to="`detail/list?q=${item.nodeTime}`">
@@ -103,19 +103,19 @@ onBeforeUnmount(() => {
   position: relative;
 
   > .countType {
-    position: relative;
+    position: fixed;
     top: 0;
     left: 50%;
     padding-top: 15px;
     transform: translateX(-50%);
     z-index: 10;
-    max-width: 100%;
+    width: 100%;
     background-color: #2a2a2a;
   }
 
   > .content-wrap {
     position: relative;
-    top: 20px;
+    top: 70px;
     left: 0;
     padding-bottom: 80px;
 
@@ -143,6 +143,7 @@ onBeforeUnmount(() => {
           display: inline-flex;
           align-items: center;
           gap: 10px;
+          font-size: 16px;
 
           > .svgWrap {
             display: inline-block;
@@ -158,9 +159,9 @@ onBeforeUnmount(() => {
           flex-direction: column;
           text-align: right;
           gap: 8px;
-
+          font-size: 14px;
           p {
-            font-size: 20px;
+            font-size: 16px;
           }
         }
       }
@@ -193,7 +194,7 @@ onBeforeUnmount(() => {
   }
 
   .nav {
-    font-size: 10px;
+    font-size: 16px;
     padding: 15px 20px;
     background-color: #2a2a2a;
     display: flex;

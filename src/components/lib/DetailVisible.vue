@@ -112,7 +112,9 @@ const save = () => {
     padding: 10px 20px;
     font-size: 18px;
   }
-
+  >.nav{
+    font-size: 16px;
+  }
   > .content {
     background-color: #202020;
     padding: 10px 20px;
