@@ -52,12 +52,13 @@ export default defineComponent({
         //@ts-ignore
         sorted[arr[i]]=obj[arr[i]]
       }
-      return sorted
+      return sorted as hashType
     }
     const dataX=computed(()=>{
       return reserveData(data.value!)
     })
-    const weekCount=(time:string)=>{
+
+    const weekCount=(time:string|number)=>{
       const hash:{[key:string]:string}={
         "0":"星期日",
         "1":"星期一",

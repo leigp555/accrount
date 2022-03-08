@@ -1,4 +1,5 @@
-export const expenditureNode = {
+type nodeX={[key:string]:string}
+export const expenditureNode:nodeX= {
     "icon1": "旅游",
     "icon2": "礼物",
     "icon3": "运动",
@@ -18,7 +19,7 @@ export const expenditureNode = {
     "icon17": "加油",
     "icon18":"自定义",
 };
-export const incomeNode={
+export const incomeNode:nodeX={
     "income1":"工资",
     "income2":"工作",
     "income3":"房租",

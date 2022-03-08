@@ -9,11 +9,11 @@
     </div>
     <div class="top">
       <div class="inner">
-        <span class="type">{{ itemInfo.type }}</span>
+        <span class="type">{{ itemInfo?.type }}</span>
         <span class="money">￥{{ selectedItem.countMoney }}</span>
       </div>
     </div>
-    <div class="contentType">{{ itemInfo.contentType }}</div>
+    <div class="contentType">{{ itemInfo?.contentType }}</div>
     <div class="nav">
       {{ dayjs(selectedItem.nodeTime).format("YYYY-MM-DD") }}<span>支出￥{{ selectedItem.countMoney }}</span></div>
     <div class="content">

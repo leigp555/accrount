@@ -1,0 +1,9 @@
+vite build --base=https://leigp555.github.io/accrount-S &&
+cd dist &&
+git add . &&
+git commit -m "部署" &&
+git push &&
+cd .. &&
+echo "https://leigp555.github.io/accrount-S/index.html#/"
+
+
