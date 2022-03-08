@@ -28,7 +28,7 @@
                       <use :xlink:href="`#icon-${item.iconNumber}`"></use>
                     </svg>
                   </div>
-                  <p>{{ item.node }}</p>
+                  <p class="node">{{ item.node }}</p>
                 </div>
                 <div class="right">
                   <p>￥{{ item.countMoney }}</p>
@@ -52,7 +52,7 @@
                       <use :xlink:href="`#icon-${item.iconNumber}`"></use>
                     </svg>
                   </div>
-                  <p>{{ item.node }}</p>
+                  <p class="node">{{ item.node }}</p>
                 </div>
                 <div class="right">
                   <p>￥{{ item.countMoney }}</p>
@@ -173,6 +173,11 @@ const shouldShow=computed(()=>{
               padding: 10px;
               background-color: #342f2c;
               border-radius: 35%;
+            }
+            >.node{
+              max-width: 150px;
+              overflow: hidden;white-space: nowrap;
+              text-overflow: ellipsis;
             }
           }
 

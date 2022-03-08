@@ -6,6 +6,7 @@
           <use xlink:href="#icon-back"></use>
         </svg>
       </router-link>
+      <button class="delete" @click="deleteList">删除</button>
     </div>
     <div class="top">
       <div class="inner">
@@ -42,7 +43,7 @@
 <script lang="ts" setup>
 import {useRoute} from "vue-router";
 import {useStore} from "vuex";
-import {computed, ref} from "vue";
+import {computed, ref, watchEffect} from "vue";
 import {stateObj} from "../../vueX/vueX";
 import {expenditureNode, incomeNode} from "./iconNode";
 import dayjs from "dayjs";
@@ -69,17 +70,25 @@ const itemInfo = computed(() => {
     return {title: incomeNode[selectedItem.iconNumber], type: "收入", contentType: "收入明细"}
   }
 })
+
 const modifyNode = ref(selectedItem.node)
 const modifyMoney = ref(selectedItem.countMoney)
+//修改或者删除数据
+const modifiedItem = Object.assign(selectedItem) as stateObj
+const newData = Object.assign(fetchData)
+const index = newData.value.indexOf(selectedItem)
 const save = () => {
-  const modifiedItem = Object.assign(selectedItem) as stateObj
   modifiedItem.countMoney = modifyMoney.value
   modifiedItem.node = modifyNode.value
-  const newData = Object.assign(fetchData)
-  const index = newData.value.indexOf(selectedItem)
   newData.value.splice(index, 1, modifiedItem)
   store.commit("saveData", newData.value)
   window.alert("修改成功")
+  router.push('/detail')
+}
+const deleteList=()=>{
+  newData.value.splice(index, 1)
+  store.commit("saveData", newData.value)
+  window.alert("删除成功")
   router.push('/detail')
 }
 </script>
@@ -143,7 +152,6 @@ const save = () => {
           overflow: hidden;
         }
       }
-
       > input {
         background-color: inherit;
         border: none;
@@ -151,7 +159,8 @@ const save = () => {
         max-width: 100px;
         padding: 0 10px;
         line-height: 40px;
-
+        overflow: hidden;white-space: nowrap;
+        text-overflow: ellipsis;
         &:focus {
           color: yellow;
         }
@@ -174,6 +183,8 @@ const save = () => {
         > input {
           display: inline;
           max-width: 50px;
+          overflow: hidden;white-space: nowrap;
+          text-overflow: ellipsis;
           background-color: inherit;
           border: none;
           color: white;
@@ -224,9 +235,17 @@ const save = () => {
   }
 
   > .back {
-    display: inline-block;
     margin-left: 20px;
-
+    margin-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    >.delete{
+      background-color: red;
+      color: black;
+      border: none;
+      padding: 6px 15px;
+      border-radius: 10px;
+    }
     > a > .icon {
       width: 25px;
       height: 25px;
