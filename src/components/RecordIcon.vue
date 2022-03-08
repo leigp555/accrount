@@ -77,14 +77,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .icon-wrap {
   width: 100%;
+  height: 200px;
   padding-top: 10px;
-  max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #202020;
-
   > .inner {
-    height: 100%;
     display: flex;
     width: 100%;
     position: relative;
@@ -93,7 +91,7 @@ export default defineComponent({
     > .svgList {
       transition: all 250ms;
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       padding: 10px;
       gap: 10px;

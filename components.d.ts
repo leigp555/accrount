@@ -7,7 +7,6 @@ declare module 'vue' {
     Detail: typeof import('./src/components/Detail.vue')['default']
     DetailVisible: typeof import('./src/components/lib/DetailVisible.vue')['default']
     EChart: typeof import('./src/components/lib/EChart.vue')['default']
-    ElCalendar: typeof import('element-plus/es')['ElCalendar']
     Home: typeof import('./src/components/Home.vue')['default']
     MoneyRanking: typeof import('./src/components/lib/MoneyRanking.vue')['default']
     NotFound: typeof import('./src/components/NotFound.vue')['default']

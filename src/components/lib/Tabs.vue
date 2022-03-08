@@ -90,7 +90,7 @@ export default defineComponent({
 
       > .title {
         display: flex;
-        gap: 50px;
+        gap: 100px;
         margin-bottom: 5px;
         font-size: 18px;
       }

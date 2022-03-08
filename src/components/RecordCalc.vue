@@ -70,10 +70,10 @@ export default defineComponent({
 .home-recordTime-wrap {
   background-color: #efbd5e;
   padding-top: 10px;
-
   > .showMoney {
+
     padding: 14px;
-    margin: 0 2%;
+    margin: 0 15px;
     background-color: #fdefd2;
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
     border-radius: 10px;
@@ -83,21 +83,20 @@ export default defineComponent({
   }
 
   > .money-calc {
-    margin: 10px 2%;
+    margin: 10px 15px 0;
 
     .inputPad {
       display: flex;
       flex-wrap: wrap;
-      margin-right: -4%;
-      padding-bottom: 70px;
+      justify-content: space-between;
+      align-items: center;
 
       > button {
-        margin-bottom: 2%;
-        margin-right: 4%;
+        margin-bottom: 10px;
         font-size: 18px;
-        padding: 13px 0;
+        padding: 10px 0;
         text-align: center;
-        width: 21%;
+        width: 23%;
         border: 1px solid #999;
         background-color: #fdefd2;
         box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);

@@ -42,13 +42,14 @@
 .account-app-wrap {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
   position: relative;
   top: 0;
   left: 0;
   > .main {
     height: 100%;
     background-color: #202020;
-    overflow: auto;
+    overflow: hidden;
   }
   > .account-app-nav {
     background-color: rgba(61, 60, 60, 1);
@@ -60,7 +61,7 @@
     z-index: 10;
     width: 100%;
     height: 80px;
-    padding: 8px 30px;
+    padding: 5px 20px;
     > .nav-list {
       display: flex;
       justify-content: space-between;

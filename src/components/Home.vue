@@ -41,6 +41,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home-wrap{
+  overflow: hidden;
   background-color: #202020;
+  height: calc(100% - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  >.record-icon{
+    flex-grow: 10;
+    flex-shrink: 10;
+  }
 }
 </style>

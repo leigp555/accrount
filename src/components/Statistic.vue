@@ -193,9 +193,11 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .statistic-wrap {
   height: 100%;
+  width: 100%;
   background-color: inherit;
   color: white;
-
+  overflow-y: auto;
+  overflow-x: hidden;
   > .countType {
     background-color: #202020;
     padding-top: 20px;
