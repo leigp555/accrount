@@ -8,12 +8,9 @@ html, body {
   overflow-scrolling: touch;
   height: 100%;
   overflow: hidden;
-  @media (max-width: 500px) {
-    max-width: 400px;
-    overflow: hidden;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -109,7 +106,8 @@ button::-moz-focus-inner,
 [hidden] {
   display: none;
 }
-#app{
+
+#app {
   height: 100%;
   width: 100%;
 }
