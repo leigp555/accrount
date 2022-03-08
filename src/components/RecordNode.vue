@@ -49,7 +49,6 @@ export default defineComponent({
   justify-content: start;
   align-items: center;
   background-color:#2a2a2a;
-  padding: 5px 0;
   border-top: 1px solid #202020;
   >.inner{
     color: white;

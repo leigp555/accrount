@@ -95,7 +95,7 @@ export default defineComponent({
         margin-bottom: 2%;
         margin-right: 4%;
         font-size: 18px;
-        padding: 15px 0;
+        padding: 13px 0;
         text-align: center;
         width: 21%;
         border: 1px solid #999;

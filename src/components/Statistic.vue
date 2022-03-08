@@ -192,7 +192,6 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .statistic-wrap {
-  overflow: hidden;
   height: 100%;
   background-color: inherit;
   color: white;

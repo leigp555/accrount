@@ -8,17 +8,25 @@
           </svg>
           <span>{{incomeNode[item]}}</span>
         </div>
-
+        <div class="replace"></div>
+        <div class="replace"></div>
+        <div class="replace"></div>
+        <div class="replace"></div>
+        <div class="replace"></div>
       </div>
       <div class="svgList nextList"
            :class="{expenditureLeft:countType==='expenditure',expenditure:countType!=='expenditure'}">
-
         <div class="svgWrap" v-for="(item,index) in expenditureList" :key="index" @click="toggle($event,item)">
           <svg class="icon">
             <use :xlink:href="`#icon-${item}`"></use>
           </svg>
           <span>{{expenditureNode[item]}}</span>
         </div>
+        <div class="replace"></div>
+        <div class="replace"></div>
+        <div class="replace"></div>
+        <div class="replace"></div>
+        <div class="replace"></div>
       </div>
     </div>
   </div>
@@ -69,8 +77,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .icon-wrap {
   width: 100%;
-  padding-top: 20px;
-  min-height: 30vh;
+  padding-top: 10px;
+  max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #202020;
@@ -78,19 +86,21 @@ export default defineComponent({
   > .inner {
     height: 100%;
     display: flex;
-    flex-wrap: wrap;
-    width: 87vw;
-    margin-right: auto;
-    margin-left: auto;
+    width: 100%;
     position: relative;
     top: 0;
     left: 0;
-
     > .svgList {
-      margin-right: -3vw;
       transition: all 250ms;
-      display: inline-block;
-
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      gap: 10px;
+      display: flex;
+      .replace{
+        width: 60px;
+      }
       &.expenditureLeft {
         transform: translateX(0);
       }
@@ -115,11 +125,10 @@ export default defineComponent({
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-right: 3vw;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
         background-color: rgba(255, 205, 67, .5);
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
         background-color: #202020;
         >span{
           color: white;
