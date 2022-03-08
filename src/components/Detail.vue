@@ -103,20 +103,19 @@ onBeforeUnmount(() => {
   position: relative;
 
   > .countType {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 50%;
     padding-top: 15px;
     transform: translateX(-50%);
     z-index: 10;
-
     max-width: 100%;
     background-color: #2a2a2a;
   }
 
   > .content-wrap {
     position: relative;
-    top: 70px;
+    top: 20px;
     left: 0;
     padding-bottom: 80px;
 
