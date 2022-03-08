@@ -105,7 +105,7 @@ onBeforeUnmount(() => {
     transform: translateX(-50%);
     z-index: 10;
 
-    width: 100%;
+    max-width: 100%;
     background-color: #2a2a2a;
   }
 

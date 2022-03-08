@@ -76,27 +76,28 @@ export default defineComponent({
     justify-content: right;
     align-items: center;
     padding: 14px;
-    margin: 0 2vw;
+    margin: 0 2%;
     background-color: #fdefd2;
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
     border-radius: 10px;
   }
 
   > .money-calc {
-    margin: 10px 2vw;
+    margin: 10px 2%;
 
     .inputPad {
       display: flex;
       flex-wrap: wrap;
-      margin-right: -4vw;
+      margin-right: -4%;
+      padding-bottom: 70px;
 
       > button {
-        margin-bottom: 2vw;
-        margin-right: 4vw;
+        margin-bottom: 2%;
+        margin-right: 4%;
         font-size: 18px;
         padding: 15px 0;
         text-align: center;
-        width: 21vw;
+        width: 21%;
         border: 1px solid #999;
         background-color: #fdefd2;
         box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
@@ -104,7 +105,7 @@ export default defineComponent({
       }
 
       > .complete {
-        width: 46vw;
+        width: 46%;
       }
     }
   }
