@@ -1,67 +1,69 @@
 <template>
-  <!--  <div class="noRecord" v-if="Object.keys(sortedIncomeList)[0]">-->
-  <!--    <svg class="icon" aria-hidden="true">-->
-  <!--      <use xlink:href="#icon-noRecord"></use>-->
-  <!--    </svg>-->
-  <!--    <p>暂无记录，快去记一笔吧</p>-->
-  <!--  </div>-->
   <div class="detail-wrap">
-    <div class="countType">
-      <Tabs>
-        <Tab title="支出"></Tab>
-        <Tab title="收入"></Tab>
-      </Tabs>
+    <div class="noRecord" v-if="!Object.keys(sortedIncomeList)[0]">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-noRecord"></use>
+      </svg>
+      <p>暂无记录，快去记一笔吧</p>
     </div>
-    <div class="content-wrap">
-      <div class="expenditure" :class="{'exOpen':countType==='expenditure','exClose':countType!=='expenditure'}">
-        <div v-for="(value,key) in sortedExpenditure" class="list"
-             :key="key">
-          <div class="nav"><span>{{ key }}</span><span>支出￥{{ value[value.length - 1] }}</span></div>
+    <div class="detail-inner" v-else>
+      <div class="countType">
+        <Tabs>
+          <Tab title="支出"></Tab>
+          <Tab title="收入"></Tab>
+        </Tabs>
+      </div>
+      <div class="content-wrap">
+        <div class="expenditure" :class="{'exOpen':countType==='expenditure','exClose':countType!=='expenditure'}">
+          <div v-for="(value,key) in sortedExpenditure" class="list"
+               :key="key">
+            <div class="nav"><span>{{ key }}</span><span>支出￥{{ value[value.length - 1] }}</span></div>
 
-          <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
-               :key="index">
-            <router-link :to="`detail/list?q=${item.nodeTime}`">
-              <div class="left">
-                <div class="svgWrap">
-                  <svg class="icon" aria-hidden="true">
-                    <use :xlink:href="`#icon-${item.iconNumber}`"></use>
-                  </svg>
+            <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
+                 :key="index">
+              <router-link :to="`detail/list?q=${item.nodeTime}`">
+                <div class="left">
+                  <div class="svgWrap">
+                    <svg class="icon" aria-hidden="true">
+                      <use :xlink:href="`#icon-${item.iconNumber}`"></use>
+                    </svg>
+                  </div>
+                  <p>{{ item.node }}</p>
                 </div>
-                <p>{{ item.node }}</p>
-              </div>
-              <div class="right">
-                <p>￥{{ item.countMoney }}</p>
-                <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
-              </div>
-            </router-link>
+                <div class="right">
+                  <p>￥{{ item.countMoney }}</p>
+                  <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
-        <div v-for="(value,key) in sortedIncomeList" class="list"
-             :key="key">
-          <div class="nav"><span>{{ key }}</span><span>支出￥{{ value[value.length - 1] }}</span></div>
-          <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
-               :key="index">
-            <router-link :to="`detail/list?q=${item.nodeTime}`">
-              <div class="left">
-                <div class="svgWrap">
-                  <svg class="icon" aria-hidden="true">
-                    <use :xlink:href="`#icon-${item.iconNumber}`"></use>
-                  </svg>
+        <div class="income" :class="{'inOpen':countType==='income','inClose':countType!=='income' }">
+          <div v-for="(value,key) in sortedIncomeList" class="list"
+               :key="key">
+            <div class="nav"><span>{{ key }}</span><span>支出￥{{ value[value.length - 1] }}</span></div>
+            <div class="content" v-for="(item,index) in value.slice(0,value.length-1)"
+                 :key="index">
+              <router-link :to="`detail/list?q=${item.nodeTime}`">
+                <div class="left">
+                  <div class="svgWrap">
+                    <svg class="icon" aria-hidden="true">
+                      <use :xlink:href="`#icon-${item.iconNumber}`"></use>
+                    </svg>
+                  </div>
+                  <p>{{ item.node }}</p>
                 </div>
-                <p>{{ item.node }}</p>
-              </div>
-              <div class="right">
-                <p>￥{{ item.countMoney }}</p>
-                <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
-              </div>
-            </router-link>
+                <div class="right">
+                  <p>￥{{ item.countMoney }}</p>
+                  <span>{{ dayjs(item.nodeTime).format("HH:mm") }}</span>
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
 </template>
@@ -84,7 +86,7 @@ const countType = computed(() => {
 onBeforeUnmount(() => {
   store.commit("initial")
 })
-
+console.log(Object.keys(sortedIncomeList)[0]);
 </script>
 
 
@@ -95,112 +97,137 @@ onBeforeUnmount(() => {
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+
   &::-webkit-scrollbar {
     display: none;
   }
+
   padding-bottom: 80px;
   background-color: #202020;
   position: relative;
-
-  > .countType {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    padding-top: 15px;
-    transform: translateX(-50%);
-    z-index: 10;
-    width: 100%;
-    background-color: #2a2a2a;
-  }
-
-  > .content-wrap {
+  >.noRecord {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     position: relative;
-    top: 70px;
     left: 0;
-    padding-bottom: 80px;
+    top: 30%;
 
-    > .expenditure {
-      transition: all 250ms;
+    > .icon {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+      clip-path: circle(100%);
+      background-color: #202020;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
     }
-
-    > .income {
-      position: absolute;
+  }
+  > .detail-inner {
+    > .countType {
+      position: fixed;
       top: 0;
-      left: 0;
+      left: 50%;
+      padding-top: 15px;
+      transform: translateX(-50%);
+      z-index: 10;
       width: 100%;
-      transition: all 250ms;
+      background-color: #2a2a2a;
     }
 
-    .content {
-      > a {
-        background-color: #202020;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    > .content-wrap {
+      position: relative;
+      top: 70px;
+      left: 0;
+      padding-bottom: 80px;
 
-        > .left {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 16px;
-
-          > .svgWrap {
-            display: inline-block;
-            padding: 10px;
-            background-color: #342f2c;
-            border-radius: 35%;
-          }
-        }
-
-        .right {
-          display: inline-flex;
-          flex-wrap: wrap;
-          flex-direction: column;
-          text-align: right;
-          gap: 8px;
-          font-size: 14px;
-          p {
-            font-size: 16px;
-          }
-        }
+      > .expenditure {
+        transition: all 250ms;
       }
 
+      > .income {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transition: all 250ms;
+      }
 
+      .content {
+        > a {
+          background-color: #202020;
+          padding: 10px 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          > .left {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+
+            > .svgWrap {
+              display: inline-block;
+              padding: 10px;
+              background-color: #342f2c;
+              border-radius: 35%;
+            }
+          }
+
+          .right {
+            display: inline-flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            text-align: right;
+            gap: 8px;
+            font-size: 14px;
+
+            p {
+              font-size: 16px;
+            }
+          }
+        }
+
+
+      }
+
+      > .exOpen {
+        transform: translateX(0);
+      }
+
+      > .exClose {
+        transform: translateX(-100vw);
+      }
+
+      > .inOpen {
+        transform: translateX(0);
+      }
+
+      > .inClose {
+        transform: translateX(100vw);
+      }
     }
 
     > .exOpen {
-      transform: translateX(0);
     }
 
-    > .exClose {
-      transform: translateX(-100vw);
+    > .countType {
+      background-color: #202020;
     }
 
-    > .inOpen {
-      transform: translateX(0);
-    }
-
-    > .inClose {
-      transform: translateX(100vw);
+    .nav {
+      font-size: 16px;
+      padding: 15px 20px;
+      background-color: #2a2a2a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 
-  > .exOpen {
-  }
-
-  > .countType {
-    background-color: #202020;
-  }
-
-  .nav {
-    font-size: 16px;
-    padding: 15px 20px;
-    background-color: #2a2a2a;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
 }
 
 .icon {
@@ -213,24 +240,5 @@ onBeforeUnmount(() => {
   overflow: hidden;
 }
 
-.noRecord {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-  left: 0;
-  top: 30%;
 
-  > .icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
-    clip-path: circle(100%);
-    background-color: #202020;
-    vertical-align: -0.15em;
-    fill: currentColor;
-    overflow: hidden;
-  }
-}
 </style>
